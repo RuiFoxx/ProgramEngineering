@@ -4,7 +4,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Hash
 {
-    public String hash(String pass) throws NoSuchAlgorithmException
+    public static String hash(String pass) throws NoSuchAlgorithmException
     {
         MessageDigest messageDigest = null;
         byte [] digest = new byte[0];
