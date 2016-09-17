@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Cli
 {
-    static void parse(String... args) throws ParseException
+    static HashMap<String, String> parse(String... args) throws ParseException
     {
         HashMap<String, String> arrArgValues=new HashMap<>(); //Map - пара (ключ, значение)
         Option loginOption=new Option("l", "login", true, "Login "); // Короткое название, длинное, принимет ли ключ данные, текстовое пояснеие
@@ -60,5 +60,7 @@ public class Cli
 
         for(HashMap.Entry<String, String> pair:arrArgValues.entrySet()) //вывод мэпа на экран
             System.out.println(pair.getKey()+": "+pair.getValue());
+
+        return arrArgValues;
     }
 }
