@@ -1,6 +1,7 @@
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 public class Hash
 {
@@ -23,4 +24,14 @@ public class Hash
         }
         return md5Hex;
     }
+
+    public static String Salt()
+    {
+        SecureRandom random = new SecureRandom();
+
+        BigInteger salt = new BigInteger(130, random);
+
+        return salt.toString(32);
+    }
+
 }
