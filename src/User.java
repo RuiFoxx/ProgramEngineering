@@ -25,5 +25,5 @@ public class User
         this.login = login;
         this.salt = Hash.Salt();
         this.password = Hash.hash(Hash.hash(password)+salt);
-
     }
+}
