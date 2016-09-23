@@ -5,7 +5,7 @@ import java.util.HashMap;
 import static com.Hash.hash;
 
 public class Check {
-    public static int checkAuthentication(ArrayList<User> users, HashMap<String, String> arrArgValues) throws Throwable {
+    public static User checkAuthentication(ArrayList<User> users, HashMap<String, String> arrArgValues) throws Throwable {
         String login="", pass="";
         User curUser=null;
         if(arrArgValues.containsKey("login")&&(arrArgValues.containsKey("password"))) {
@@ -22,14 +22,14 @@ public class Check {
 
         if(curUser==null) {
             System.out.printf("User not found");
-            return 1;
+            System.exit(1);
         }
 
         pass=hash(hash(pass)+curUser.getSalt());
         if(!curUser.getPassword().equals(pass)) {
             System.out.printf("Wrong password");
-            return 2;
+            System.exit(2);
         }
-        return 0;
+        return curUser;
     }
 }

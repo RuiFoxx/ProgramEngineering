@@ -23,7 +23,7 @@ public class Main
         String[] accounting = {"login", "password", "resource", "role", "date-start", "date-end", "volume"};
 
         HashMap<String, String> arrArgValues = Cli.parse(args);
-        if(Check.checkAuthentication(users, arrArgValues)==0)
-            System.out.printf("Authentication success");
+        User authentUser=Check.checkAuthentication(users, arrArgValues);
+        System.out.println("Authentication success for user "+authentUser.getLogin());
     }
 }
