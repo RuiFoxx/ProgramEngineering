@@ -2,6 +2,7 @@ package com;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import static com.Hash.hash;
 
 public class Check {
     public static int checkAuthentication(ArrayList<User> users, HashMap<String, String> arrArgValues) throws Throwable {
@@ -12,19 +13,19 @@ public class Check {
             pass=arrArgValues.get("password");
         }
 
-        boolean exists=false;
-        for(int i=0; i<users.size() && !exists; i++) {
+        for(int i=0; i<users.size(); i++) {
             if(users.get(i).getLogin().equals(login)) {
-                exists=true;
                 curUser=users.get(i);
+                break;
             }
         }
 
-        if(!exists) {
+        if(curUser==null) {
             System.out.printf("User not found");
             return 1;
         }
 
+        pass=hash(hash(pass)+curUser.getSalt());
         if(!curUser.getPassword().equals(pass)) {
             System.out.printf("Wrong password");
             return 2;
