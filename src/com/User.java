@@ -1,4 +1,8 @@
+package com;
+
 import java.security.NoSuchAlgorithmException;
+
+import static com.Hash.hash;
 
 public class User
 {
@@ -12,10 +16,12 @@ public class User
     {
         return salt;
     }
-
     public String getPassword()
     {
         return password;
+    }
+    public String getLogin() {
+        return login;
     }
 
     public User(int id, String name, String login, String password) throws NoSuchAlgorithmException
@@ -24,6 +30,6 @@ public class User
         this.name = name;
         this.login = login;
         this.salt = Hash.Salt();
-        this.password = Hash.hash(Hash.hash(password)+salt);
+        this.password = hash(hash(password)+salt);
     }
 }

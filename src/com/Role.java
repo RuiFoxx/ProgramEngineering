@@ -1,3 +1,5 @@
+package com;
+
 public class Role {
     private int id;
     private User user;
