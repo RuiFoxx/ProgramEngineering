@@ -8,7 +8,7 @@ public class Check {
     public static User checkAuthentication(ArrayList<User> users, HashMap<String, String> arrArgValues) throws Throwable {
         String login="", pass="";
         User curUser=null;
-        if(arrArgValues.containsKey("login")&&(arrArgValues.containsKey("password"))) {
+        if(arrArgValues.containsKey("login") && arrArgValues.containsKey("password")) {
             login=arrArgValues.get("login");
             pass=arrArgValues.get("password");
         }
@@ -31,5 +31,13 @@ public class Check {
             System.exit(2);
         }
         return curUser;
+    }
+
+    public static int checkAuthorization() {
+        return 0;
+    }
+
+    public static int checkAccounting() {
+        return 0;
     }
 }

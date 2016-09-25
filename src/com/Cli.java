@@ -60,8 +60,8 @@ public class Cli
         if (cmdLine.hasOption("v"))
             arrArgValues.put("volume", cmdLine.getOptionValue("v"));
 
-        /*for (HashMap.Entry<String, String> pair : arrArgValues.entrySet()) //вывод мэпа на экран
-            System.out.println(pair.getKey() + ": " + pair.getValue());*/
+        for (HashMap.Entry<String, String> pair : arrArgValues.entrySet()) //вывод мэпа на экран
+            System.out.println(pair.getKey() + ": " + pair.getValue());
 
         return arrArgValues;
     }

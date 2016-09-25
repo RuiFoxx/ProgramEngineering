@@ -2,7 +2,6 @@ package com;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Main
 {
@@ -18,12 +17,23 @@ public class Main
         roles.add(new Role(3, users.get(1), "EXECUTE", "a.b.c"));
         roles.add(new Role(4, users.get(0), "EXECUTE", "a.bc"));
 
-        String[] authentication = {"login", "password"};
-        String[] authorisation = {"login", "password, resource, role"};
-        String[] accounting = {"login", "password", "resource", "role", "date-start", "date-end", "volume"};
-
         HashMap<String, String> arrArgValues = Cli.parse(args);
-        User authentUser=Check.checkAuthentication(users, arrArgValues);
-        System.out.println("Authentication success for user "+authentUser.getLogin());
+        User authenticatedUser=null;
+
+        if(arrArgValues.size()==2 && arrArgValues.containsKey("login") && arrArgValues.containsKey("password")) {
+            authenticatedUser = Check.checkAuthentication(users, arrArgValues);
+            System.out.println("Authentication success for user " + authenticatedUser.getLogin());
+        }
+        if(arrArgValues.size()==4 && arrArgValues.containsKey("login") && arrArgValues.containsKey("password")
+                && arrArgValues.containsKey("role") && arrArgValues.containsKey("resource")) {
+            authenticatedUser = Check.checkAuthentication(users, arrArgValues);
+            Check.checkAuthorization();
+        }
+        if(arrArgValues.size()==7) {
+            authenticatedUser = Check.checkAuthentication(users, arrArgValues);
+            Check.checkAuthorization();
+            if(Check.checkAuthorization()==0)
+                Check.checkAccounting();
+        }
     }
 }
