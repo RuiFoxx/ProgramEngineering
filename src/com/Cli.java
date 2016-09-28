@@ -1,15 +1,17 @@
+package com;
+
 import org.apache.commons.cli.*;
 import java.util.*;
 
 public class Cli
 {
-    static void parse(String... args) throws ParseException
+    static HashMap<String, String> parse(String... args) throws ParseException
     {
         HashMap<String, String> arrArgValues=new HashMap<>(); //Map - пара (ключ, значение)
         Option loginOption=new Option("l", "login", true, "Login "); // Короткое название, длинное, принимет ли ключ данные, текстовое пояснеие
         Option passOption=new Option("p", "password", true, "Password "); //Стандартная функция библиотеки cli
         Option resOption=new Option("res", "resource", true, "Resource ");
-        Option roleOption=new Option("rol", "role", true, "Role ");
+        Option roleOption=new Option("rol", "role", true, "com.Role ");
         Option dsOption=new Option("ds", "date-start", true, "Start date ");
         Option deOption=new Option("de", "date-end", true, "End date ");
         Option volOption=new Option("v", "volume", true, "Volume ");
@@ -21,7 +23,7 @@ public class Cli
         resOption.setArgs(1);
         resOption.setArgName("Resource");
         roleOption.setArgs(1);
-        roleOption.setArgName("Role");
+        roleOption.setArgName("com.Role");
         dsOption.setArgs(1);
         dsOption.setArgName("Start date");
         deOption.setArgs(1);
@@ -58,7 +60,6 @@ public class Cli
         if(cmdLine.hasOption("v"))
             arrArgValues.put("volume", cmdLine.getOptionValue("v"));
 
-        for(HashMap.Entry<String, String> pair:arrArgValues.entrySet()) //вывод мэпа на экран
-            System.out.println(pair.getKey()+": "+pair.getValue());
+        return arrArgValues;
     }
 }

@@ -1,9 +1,11 @@
+package com;
+
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class Main
 {
-    public static void main(String ...args) throws NoSuchAlgorithmException
+    public static void main(String ...args) throws Throwable
     {
 
         ArrayList <User> users = new ArrayList<>();
@@ -25,6 +27,22 @@ public class Main
                 currentRoles.add(roles.get(i));
             }
         }
+
+        Role role=Check.CheckAuthorization(currentRoles, Cli.parse(args));
+
+        if(role.getResource()==null)
+        {
+            System.out.println("Wrong resource");
+            System.exit(4);
+        }
+
+        if(role.getName()==null)
+        {
+            System.out.println("Wrong role");
+            System.exit(3);
+        }
+
+        else System.exit(0);
 
 
    

@@ -1,3 +1,5 @@
+package com;
+
 import java.security.NoSuchAlgorithmException;
 
 public class User

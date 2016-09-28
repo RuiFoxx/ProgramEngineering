@@ -1,8 +1,15 @@
+package com;
+
 public class Role
 {
     private int id;
     private User user;
     private String name, resource;
+
+    public String getName()
+    {
+        return name;
+    }
 
     public User getUser()
     {
@@ -22,5 +29,13 @@ public class Role
         this.resource = resource;
     }
 
+    public void setName(String name)
+    {
+        this.name = name;
+    }
 
+    public void setResource(String resource)
+    {
+        this.resource = resource;
+    }
 }
