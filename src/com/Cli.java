@@ -42,6 +42,7 @@ public class Cli
 
         CommandLineParser cmdLinePosixParser=new PosixParser();
         //CommandLineParser - тип данных, PosixParser - тип парсера
+
         CommandLine cmdLine = cmdLinePosixParser.parse(posixOptions, args);
         //Комнадлайн - тип данных, парс - функция (массив опций, строка аргументов), цмдлайн - разбитая строка
 

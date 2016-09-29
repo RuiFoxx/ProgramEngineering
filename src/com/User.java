@@ -1,7 +1,6 @@
 package com;
 
 import java.security.NoSuchAlgorithmException;
-
 import static com.Hash.hash;
 
 public class User
@@ -16,10 +15,12 @@ public class User
     {
         return salt;
     }
+
     public String getPassword()
     {
         return password;
     }
+
     public String getLogin() {
         return login;
     }

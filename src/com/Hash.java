@@ -1,16 +1,21 @@
 package com;
 
 import java.math.BigInteger;
-import java.security.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
-public class Hash {
-    public static String hash(String pass) throws NoSuchAlgorithmException {
-        MessageDigest messageDigest;
-        byte[] digest;
+public class Hash
+{
+    public static String hash(String pass) throws NoSuchAlgorithmException
+    {
+        MessageDigest messageDigest = null;
+        byte [] digest = new byte[0];
 
         messageDigest = MessageDigest.getInstance("MD5");
         messageDigest.reset();
         messageDigest.update(pass.getBytes());
+
         digest = messageDigest.digest();
 
         BigInteger bigInt = new BigInteger(1, digest);
@@ -22,7 +27,8 @@ public class Hash {
         return md5Hex;
     }
 
-    public static String Salt() {
+    public static String Salt()
+    {
         SecureRandom random = new SecureRandom();
 
         BigInteger salt = new BigInteger(130, random);
