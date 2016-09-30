@@ -17,6 +17,11 @@ public class Main
         roles.add(new Role(3, users.get(1), "EXECUTE", "a.b.c"));
         roles.add(new Role(4, users.get(0), "EXECUTE", "a.bc"));
 
+        char exdata=0xFF&(2016%1000);
+        int a=(int)exdata;
+
+        System.out.println(a);
+
         HashMap<String, String> arrArgValues = Cli.parse(args);
         User authenticatedUser=null;
 
