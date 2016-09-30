@@ -1,5 +1,6 @@
 package com;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -7,6 +8,7 @@ public class Main
 {
     public static void main(String ...args) throws Throwable
     {
+
         ArrayList <User> users = new ArrayList<>();
         users.add(new User(1, "John Doe", "jdoe", "sup3rpaZZ"));
         users.add(new User(2, "Jane Row", "jrow", "Qweqrty12"));
@@ -17,43 +19,105 @@ public class Main
         roles.add(new Role(3, users.get(1), "EXECUTE", "a.b.c"));
         roles.add(new Role(4, users.get(0), "EXECUTE", "a.bc"));
 
-        char exdata=0xFF&(2016%1000);
-        int a=(int)exdata;
+        User currentUser; //Текущий пользователь
+        Role role; //Его роль
+        Accounting account; //Его параметры
 
-        System.out.println(a);
-
-        HashMap<String, String> arrArgValues = Cli.parse(args);
-        User authenticatedUser=null;
-
-        if(arrArgValues.size()==2 && arrArgValues.containsKey("login") && arrArgValues.containsKey("password")) {
-            authenticatedUser = Check.checkAuthentication(users, arrArgValues);
-            System.out.println("Authentication success for user " + authenticatedUser.getLogin());
-        }
-
-        ArrayList <Role> currentRoles = new ArrayList<>();
-
-        for (int i=0;i<roles.size();i++)
+        //Проверка количества введенных ресурсов
+        HashMap <String,String> arrArgValues = Cli.parse(args);
+        if ((arrArgValues.size()==2)&&(arrArgValues.containsKey("login"))&&(arrArgValues.containsKey("password")))
         {
-            if(roles.get(i).getUser()==users.get(0))
+            //~~~~~~~~~~~~~~~Аутентификация~~~~~~~~~~~~~~~
+            currentUser=Check.checkAuthentication(users,arrArgValues);
+            System.exit(0);
+        }
+        else
+        {
+            if ((arrArgValues.size()==4)&&(arrArgValues.containsKey("login"))&&(arrArgValues.containsKey("password"))
+                    &&(arrArgValues.containsKey("resource"))&&(arrArgValues.containsKey("role")))
             {
-                currentRoles.add(roles.get(i));
+                //~~~~~~~~~~~~~~Авторизация~~~~~~~~~~~~~~~~~~
+                currentUser=Check.checkAuthentication(users,arrArgValues);
+
+                //все роли для пользователя
+                ArrayList <Role> currentRoles = new ArrayList<>();
+
+                for (int i=0;i<roles.size();i++)
+                {
+                    if(roles.get(i).getUser()==currentUser)
+                    {
+                        currentRoles.add(roles.get(i));
+                    }
+                }
+
+                role=Check.CheckAuthorization(currentRoles, Cli.parse(args));
+
+                if(role.getResource()==null)
+                {
+                    System.out.println("Wrong resource");
+                    System.exit(4);
+                }
+                if(role.getName()==null)
+                {
+                    System.out.println("Wrong role");
+                    System.exit(3);
+                }
+                else System.exit(0);
+            }
+            else
+            {
+                if ((arrArgValues.size()==7)&&(arrArgValues.containsKey("login"))&&(arrArgValues.containsKey("password"))
+                    &&(arrArgValues.containsKey("resource"))&&(arrArgValues.containsKey("role"))
+                        &&(arrArgValues.containsKey("date-start"))&&(arrArgValues.containsKey("date-end"))&&(arrArgValues.containsKey("volume")))
+                {
+                    //~~~~~~~~~~~~~~~~Аккаунтинг~~~~~~~~~~~~~~~~~~~~~
+                    currentUser=Check.checkAuthentication(users,arrArgValues);
+
+                    //все роли для пользователя
+                    ArrayList <Role> currentRoles = new ArrayList<>();
+
+                    for (int i=0;i<roles.size();i++)
+                    {
+                        if(roles.get(i).getUser()==currentUser)
+                        {
+                            currentRoles.add(roles.get(i));
+                        }
+                    }
+
+                    role=Check.CheckAuthorization(currentRoles, Cli.parse(args));
+
+                    if(role.getResource()==null)
+                    {
+                        System.out.println("Wrong resource");
+                        System.exit(4);
+                    }
+                    if(role.getName()==null)
+                    {
+                        System.out.println("Wrong role");
+                        System.exit(3);
+                    }
+                    else
+                    {
+                        account = Check.CheckAccounting(arrArgValues);
+                        account.setRole(role);
+                        System.exit(0);
+                    }
+                }
+                else //если все неправильно вывод справки
+                {
+                    System.out.println("Need Help");
+                }
             }
         }
 
-        Role role=Check.CheckAuthorization(currentRoles, Cli.parse(args));
 
-        if(role.getResource()==null)
-        {
-            System.out.println("Wrong resource");
-            System.exit(4);
-        }
 
-        if(role.getName()==null)
-        {
-            System.out.println("Wrong role");
-            System.exit(3);
-        }
 
-        else System.exit(0);
+
+
+
+
+   
+
     }
 }

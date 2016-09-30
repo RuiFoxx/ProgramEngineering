@@ -5,16 +5,16 @@ import java.util.*;
 
 public class Cli
 {
-    public static HashMap<String, String> parse(String... args) throws ParseException
+    static HashMap<String, String> parse(String... args) throws ParseException
     {
         HashMap<String, String> arrArgValues=new HashMap<>(); //Map - пара (ключ, значение)
-        Option loginOption=new Option("l", "login", true, " your login"); // Короткое название, длинное, принимет ли ключ данные, текстовое пояснеие
-        Option passOption=new Option("p", "password", true, " your password"); //Стандартная функция библиотеки cli
-        Option resOption=new Option("res", "resource", true, " resource");
-        Option roleOption=new Option("rol", "role", true, " role");
-        Option dsOption=new Option("ds", "date-start", true, " start date (DD-MM-YYYY)");
-        Option deOption=new Option("de", "date-end", true, " end date (DD-MM-YYYY)");
-        Option volOption=new Option("v", "volume", true, " volume");
+        Option loginOption=new Option("l", "login", true, "Login "); // Короткое название, длинное, принимет ли ключ данные, текстовое пояснеие
+        Option passOption=new Option("p", "password", true, "Password "); //Стандартная функция библиотеки cli
+        Option resOption=new Option("res", "resource", true, "Resource ");
+        Option roleOption=new Option("rol", "role", true, "com.Role ");
+        Option dsOption=new Option("ds", "date-start", true, "Start date ");
+        Option deOption=new Option("de", "date-end", true, "End date ");
+        Option volOption=new Option("v", "volume", true, "Volume ");
 
         loginOption.setArgs(1); // Колличество параметров которые принимаем в опции
         loginOption.setArgName("Login"); // имя аргумента опции
@@ -42,27 +42,23 @@ public class Cli
 
         CommandLineParser cmdLinePosixParser=new PosixParser();
         //CommandLineParser - тип данных, PosixParser - тип парсера
-
-        CommandLine cmdLine = cmdLinePosixParser.parse(posixOptions, args);
+        CommandLine cmdLine=cmdLinePosixParser.parse(posixOptions, args);
         //Комнадлайн - тип данных, парс - функция (массив опций, строка аргументов), цмдлайн - разбитая строка
 
-        if (cmdLine.hasOption("l"))//хэзопшн- проверяет наличие опции
+        if(cmdLine.hasOption("l"))//хэзопшн- проверяет наличие опции
             arrArgValues.put("login", cmdLine.getOptionValue("l")); //помещаем в мап под ключ "логин" значение опции, соответствующей ключу -l
-        if (cmdLine.hasOption("p"))
+        if(cmdLine.hasOption("p"))
             arrArgValues.put("password", cmdLine.getOptionValue("p"));
-        if (cmdLine.hasOption("res"))
+        if(cmdLine.hasOption("res"))
             arrArgValues.put("resource", cmdLine.getOptionValue("res"));
-        if (cmdLine.hasOption("rol"))
+        if(cmdLine.hasOption("rol"))
             arrArgValues.put("role", cmdLine.getOptionValue("rol"));
-        if (cmdLine.hasOption("ds"))
+        if(cmdLine.hasOption("ds"))
             arrArgValues.put("date-start", cmdLine.getOptionValue("ds"));
-        if (cmdLine.hasOption("de"))
+        if(cmdLine.hasOption("de"))
             arrArgValues.put("date-end", cmdLine.getOptionValue("de"));
-        if (cmdLine.hasOption("v"))
+        if(cmdLine.hasOption("v"))
             arrArgValues.put("volume", cmdLine.getOptionValue("v"));
-
-        for (HashMap.Entry<String, String> pair : arrArgValues.entrySet()) //вывод мэпа на экран
-            System.out.println(pair.getKey() + ": " + pair.getValue());
 
         return arrArgValues;
     }
