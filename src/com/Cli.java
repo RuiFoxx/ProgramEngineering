@@ -8,13 +8,15 @@ public class Cli
     static HashMap<String, String> parse(String... args) throws ParseException
     {
         HashMap<String, String> arrArgValues=new HashMap<>(); //Map - пара (ключ, значение)
-        Option loginOption=new Option("l", "login", true, "Login "); // Короткое название, длинное, принимет ли ключ данные, текстовое пояснеие
-        Option passOption=new Option("p", "password", true, "Password "); //Стандартная функция библиотеки cli
-        Option resOption=new Option("res", "resource", true, "Resource ");
-        Option roleOption=new Option("rol", "role", true, "com.Role ");
-        Option dsOption=new Option("ds", "date-start", true, "Start date ");
-        Option deOption=new Option("de", "date-end", true, "End date ");
-        Option volOption=new Option("v", "volume", true, "Volume ");
+
+        Option loginOption=new Option("l", "login", true, " your login"); // Короткое название, длинное, принимет ли ключ данные, текстовое пояснеие
+        Option passOption=new Option("p", "password", true, " your password"); //Стандартная функция библиотеки cli
+        Option resOption=new Option("res", "resource", true, " resource");
+        Option roleOption=new Option("rol", "role", true, " role");
+        Option dsOption=new Option("ds", "date-start", true, " start date (DD-MM-YYYY)");
+        Option deOption=new Option("de", "date-end", true, " end date (DD-MM-YYYY)");
+        Option volOption=new Option("v", "volume", true, " volume");
+        Option helpOption=new Option("h", "help", false, "help");
 
         loginOption.setArgs(1); // Колличество параметров которые принимаем в опции
         loginOption.setArgName("Login"); // имя аргумента опции
@@ -30,6 +32,8 @@ public class Cli
         deOption.setArgName("End date");
         volOption.setArgs(1);
         volOption.setArgName("Volume");
+        helpOption.setArgs(0);
+        helpOption.setArgName("Help");
 
         Options posixOptions=new Options(); //стандартная функция (конструктор класса) создает массив опций
         posixOptions.addOption(loginOption); //добавляем опции для последующего парсинга
@@ -39,6 +43,7 @@ public class Cli
         posixOptions.addOption(dsOption);
         posixOptions.addOption(deOption);
         posixOptions.addOption(volOption);
+        posixOptions.addOption(helpOption);
 
         CommandLineParser cmdLinePosixParser=new PosixParser();
         //CommandLineParser - тип данных, PosixParser - тип парсера
@@ -59,6 +64,8 @@ public class Cli
             arrArgValues.put("date-end", cmdLine.getOptionValue("de"));
         if(cmdLine.hasOption("v"))
             arrArgValues.put("volume", cmdLine.getOptionValue("v"));
+        if (cmdLine.hasOption("h"))
+            arrArgValues.put("help", cmdLine.getOptionValue("h"));
 
         return arrArgValues;
     }
