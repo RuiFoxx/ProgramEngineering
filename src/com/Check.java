@@ -75,33 +75,43 @@ public class Check
     public static Accounting CheckAccounting (HashMap <String, String> arrArgValues) throws ParseException
     {
         //выделяем даты и объем
-        String ds=arrArgValues.get("date-start");
+        String ds = arrArgValues.get("date-start");
         String de = arrArgValues.get("date-end");
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date_start = format.parse(ds);
         Date date_end = format.parse(de);
 
-        int d=date_start.getDate(); //считанная дата из строки
-        int m=date_start.getMonth()+1;
-        int y=date_start.getYear()+1900;
+        int d_s=date_start.getDate(); //считанная дата старт из строки
+        int m_s=date_start.getMonth()+1;
+        int y_s=date_start.getYear()+1900;
 
-     /*   String [] dsParts = ds.split("."); //Если введен день больше чем есть в месяце, то необходимо
-                                            //сравнивать с считанной датой тк оно перекидывает на другой месяц
-        int temp_d = Integer.parseInt(dsParts[0]);
-        int temp_m = Integer.parseInt(dsParts[1]);
-        int temp_y = Integer.parseInt(dsParts[2]);
-        if ((temp_d!=d)||(temp_m!=m)||(temp_y!=y)) //если перешел в другой день/месяц/год, то ведденая дата значит неверна
+        int d_e=date_end.getDate(); //считанная дата энд из строки
+        int m_e=date_end.getMonth()+1;
+        int y_e=date_end.getYear()+1900;
+
+        String [] dsParts = ds.split("-"); //Если введен день больше чем есть в месяце, то необходимо
+        String [] deParts = de.split("-"); //сравнивать с считанной датой тк оно перекидывает на другой месяц
+
+        System.out.println(date_start.getDate()+" "+m_s+" "+y_s);
+
+        int temp_ds = Integer.parseInt(dsParts[2]);
+        int temp_ms = Integer.parseInt(dsParts[1]);
+        int temp_ys = Integer.parseInt(dsParts[0]);
+
+        int temp_de = Integer.parseInt(deParts[2]);
+        int temp_me = Integer.parseInt(deParts[1]);
+        int temp_ye = Integer.parseInt(deParts[0]);
+        if ((temp_ds!=d_s)||(temp_ms!=m_s)||(temp_ys!=y_s)
+                ||(temp_de!=d_e)||(temp_me!=m_e)||(temp_ye!=y_e)) //если перешел в другой день/месяц/год, то ведденая дата значит неверна
         {
-            System.out.printf("Wrong start date");
+            System.out.printf("Wrong date");
             System.exit(5);
-        }*/
-
-        System.out.println(date_start.getDate()+" "+m+" "+y);
+        }
 
         int vol = Integer.parseInt(arrArgValues.get("volume"));
 
         //Проверка даты
-        int [] leap_year ={31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; //Високосный год
+     /*   int [] leap_year ={31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; //Високосный год
         int [] year ={31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; //Просто год
 
         //Проверка даты начала
@@ -138,7 +148,7 @@ public class Check
                 System.out.printf("Wrong end date");
                 System.exit(5);
             }
-        }
+        }*/
         //Проверка объема
         if (vol<0)
         {
