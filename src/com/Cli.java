@@ -1,22 +1,23 @@
-package com;
+﻿package com;
 
 import org.apache.commons.cli.*;
 import java.util.*;
 
 public class Cli
 {
+    private static Options posixOptions=new Options();
     static HashMap<String, String> parse(String... args) throws ParseException
     {
         HashMap<String, String> arrArgValues=new HashMap<>(); //Map - пара (ключ, значение)
 
         Option loginOption=new Option("l", "login", true, " your login"); // Короткое название, длинное, принимет ли ключ данные, текстовое пояснеие
         Option passOption=new Option("p", "password", true, " your password"); //Стандартная функция библиотеки cli
-        Option resOption=new Option("res", "resource", true, " resource");
-        Option roleOption=new Option("rol", "role", true, " role");
-        Option dsOption=new Option("ds", "date-start", true, " start date (DD-MM-YYYY)");
-        Option deOption=new Option("de", "date-end", true, " end date (DD-MM-YYYY)");
+        Option resOption=new Option("res", "resource", true, "requested resource");
+        Option roleOption=new Option("rol", "role", true, "your role");
+        Option dsOption=new Option("ds", "date-start", true, " start date (YYYY-MM-DD)");
+        Option deOption=new Option("de", "date-end", true, " end date (YYYY-MM-DD)");
         Option volOption=new Option("v", "volume", true, " volume");
-        Option helpOption=new Option("h", "help", false, "help");
+        Option helpOption=new Option("h", "help", false, " help");
 
         loginOption.setArgs(1); // Колличество параметров которые принимаем в опции
         loginOption.setArgName("Login"); // имя аргумента опции
@@ -25,7 +26,7 @@ public class Cli
         resOption.setArgs(1);
         resOption.setArgName("Resource");
         roleOption.setArgs(1);
-        roleOption.setArgName("com.Role");
+        roleOption.setArgName("Role");
         dsOption.setArgs(1);
         dsOption.setArgName("Start date");
         deOption.setArgs(1);
@@ -35,7 +36,7 @@ public class Cli
         helpOption.setArgs(0);
         helpOption.setArgName("Help");
 
-        Options posixOptions=new Options(); //стандартная функция (конструктор класса) создает массив опций
+        //стандартная функция (конструктор класса) создает массив опций
         posixOptions.addOption(loginOption); //добавляем опции для последующего парсинга
         posixOptions.addOption(passOption);
         posixOptions.addOption(resOption);
@@ -68,5 +69,13 @@ public class Cli
             arrArgValues.put("help", cmdLine.getOptionValue("h"));
 
         return arrArgValues;
+    }
+
+    public static void help()
+    {
+        HelpFormatter formatter = new HelpFormatter();
+
+        formater.printHelp("Main", posixOptions);
+        System.exit(0);
     }
 }

@@ -105,7 +105,7 @@ public class Main
                 }
                 else //если все неправильно вывод справки
                 {
-                    System.out.println("Need Help");
+                    Cli.help();
                 }
             }
         }
