@@ -1,54 +1,27 @@
-﻿package com;
+package com;
 
 import org.apache.commons.cli.*;
 import java.util.*;
 
 public class Cli
 {
-    private static Options posixOptions=new Options();
+    private static Options options = new Options();
     static HashMap<String, String> parse(String... args) throws ParseException
     {
         HashMap<String, String> arrArgValues=new HashMap<>(); //Map - пара (ключ, значение)
 
-        Option loginOption=new Option("l", "login", true, " your login"); // Короткое название, длинное, принимет ли ключ данные, текстовое пояснеие
-        Option passOption=new Option("p", "password", true, " your password"); //Стандартная функция библиотеки cli
-        Option resOption=new Option("res", "resource", true, "requested resource");
-        Option roleOption=new Option("rol", "role", true, "your role");
-        Option dsOption=new Option("ds", "date-start", true, " start date (YYYY-MM-DD)");
-        Option deOption=new Option("de", "date-end", true, " end date (YYYY-MM-DD)");
-        Option volOption=new Option("v", "volume", true, " volume");
-        Option helpOption=new Option("h", "help", false, " help");
+        options.addOption(new Option("l", "login", true, "your login"))
+                .addOption(new Option("p", "password", true, "your password"))
+                .addOption(new Option("res", "resource", true, "requested resource"))
+                .addOption(new Option("rol", "role", true, "your role"))
+                .addOption(new Option("ds", "date-start", true, "start date (YYYY-MM-DD)"))
+                .addOption(new Option("de", "date-end", true, "end date (YYYY-MM-DD)"))
+                .addOption(new Option("v", "volume", true, "volume"))
+                .addOption(new Option("h", "help", false, "help")); //добавляем опции для последующего парсинга
 
-        loginOption.setArgs(1); // Колличество параметров которые принимаем в опции
-        loginOption.setArgName("Login"); // имя аргумента опции
-        passOption.setArgs(1);
-        passOption.setArgName("Password");
-        resOption.setArgs(1);
-        resOption.setArgName("Resource");
-        roleOption.setArgs(1);
-        roleOption.setArgName("Role");
-        dsOption.setArgs(1);
-        dsOption.setArgName("Start date");
-        deOption.setArgs(1);
-        deOption.setArgName("End date");
-        volOption.setArgs(1);
-        volOption.setArgName("Volume");
-        helpOption.setArgs(0);
-        helpOption.setArgName("Help");
-
-        //стандартная функция (конструктор класса) создает массив опций
-        posixOptions.addOption(loginOption); //добавляем опции для последующего парсинга
-        posixOptions.addOption(passOption);
-        posixOptions.addOption(resOption);
-        posixOptions.addOption(roleOption);
-        posixOptions.addOption(dsOption);
-        posixOptions.addOption(deOption);
-        posixOptions.addOption(volOption);
-        posixOptions.addOption(helpOption);
-
-        CommandLineParser cmdLinePosixParser=new PosixParser();
-        //CommandLineParser - тип данных, PosixParser - тип парсера
-        CommandLine cmdLine=cmdLinePosixParser.parse(posixOptions, args);
+        CommandLineParser cmdLineParser=new DefaultParser();
+        //CommandLineParser - тип данных, DefaultParser - тип парсера
+        CommandLine cmdLine=cmdLineParser.parse(options, args);
         //Комнадлайн - тип данных, парс - функция (массив опций, строка аргументов), цмдлайн - разбитая строка
 
         if(cmdLine.hasOption("l"))//хэзопшн- проверяет наличие опции
@@ -75,7 +48,7 @@ public class Cli
     {
         HelpFormatter formatter = new HelpFormatter();
 
-        formater.printHelp("Main", posixOptions);
+        formatter.printHelp("AAA protocol", options);
         System.exit(0);
     }
 }
