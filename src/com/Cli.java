@@ -1,13 +1,13 @@
 package com;
 
 import org.apache.commons.cli.*;
-import java.util.*;
+
 
 public class Cli {
     private static Options options = new Options();
 
-    static HashMap<String, String> parse(String... args) throws ParseException {
-        HashMap<String, String> arrArgValues = new HashMap<>(); //Map - пара (ключ, значение)
+    static CmdUser parse(String... args) throws ParseException {
+        CmdUser сmdData = new CmdUser(null,null,null,null,null,null);
 
         options.addOption(new Option("l", "login", true, "your login"))
                 .addOption(new Option("p", "password", true, "your password"))
@@ -23,32 +23,30 @@ public class Cli {
         CommandLine cmdLine = cmdLineParser.parse(options, args);
         //Комнадлайн - тип данных, парс - функция (массив опций, строка аргументов), цмдлайн - разбитая строка
 
+       //Заполняем класс
         if (cmdLine.hasOption("l")) {//хэзопшн- проверяет наличие опции
-            arrArgValues.put("login", cmdLine.getOptionValue("l")); //помещаем в мап под ключ "логин" значение опции, соответствующей ключу -l
+            сmdData.setLogin(cmdLine.getOptionValue("l")); //помещаем в класс значение опции, соответствующей ключу -l
         }
         if (cmdLine.hasOption("p")) {
-            arrArgValues.put("password", cmdLine.getOptionValue("p"));
+            сmdData.setPassword(cmdLine.getOptionValue("p"));
         }
         if (cmdLine.hasOption("res")) {
-            arrArgValues.put("resource", cmdLine.getOptionValue("res"));
+            сmdData.setResource(cmdLine.getOptionValue("res"));
         }
         if (cmdLine.hasOption("rol")) {
-            arrArgValues.put("role", cmdLine.getOptionValue("rol"));
+            сmdData.setRole(cmdLine.getOptionValue("rol"));
         }
         if (cmdLine.hasOption("ds")) {
-            arrArgValues.put("date-start", cmdLine.getOptionValue("ds"));
+            сmdData.setDate_start(cmdLine.getOptionValue("ds"));
         }
         if (cmdLine.hasOption("de")) {
-            arrArgValues.put("date-end", cmdLine.getOptionValue("de"));
+            сmdData.setDate_end(cmdLine.getOptionValue("de"));
         }
         if (cmdLine.hasOption("v")) {
-            arrArgValues.put("volume", cmdLine.getOptionValue("v"));
-        }
-        if (cmdLine.hasOption("h")) {
-            arrArgValues.put("help", cmdLine.getOptionValue("h"));
+            сmdData.setVolume(cmdLine.getOptionValue("v"));
         }
 
-        return arrArgValues;
+        return сmdData;
     }
 
     public static void help() {
