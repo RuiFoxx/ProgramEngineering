@@ -1,4 +1,3 @@
-//1, 7, 8, 10, 11
 package com;
 
 import java.util.ArrayList;
