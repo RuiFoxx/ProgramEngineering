@@ -38,17 +38,19 @@ public class Check {
         com.Check.checkAuthorization(currentRoles,cmdData);
     }
 
-    public static Role checkAuthorization(ArrayList<Role> currentRoles, HashMap<String, String> arrArgValues) {
+    public static void checkAuthorization(ArrayList<Role> currentRoles, CmdUser cmdData) throws ParseException {
         //выделяем реусрс и роль
         String role = "";
         String resource = "";
         Role trueRole = new Role(999, currentRoles.get(0).getUser(), null, null);
 
-        if (arrArgValues.containsKey("role") && arrArgValues.containsKey("resource")) {
-            role = arrArgValues.get("role");
-            resource = arrArgValues.get("resource");
+        if (cmdData.getRole()!=null && cmdData.getResource()!=null) {
+            role = cmdData.getRole();
+            resource = cmdData.getResource();
         }
+        else Cli.help();// ???
 
+        //Проверка
         System.out.println(role + " " + resource);
 
         for (int i = 0; i < currentRoles.size(); i++) {
@@ -63,7 +65,16 @@ public class Check {
                 }
             }
         }
-        return trueRole;
+        if (trueRole.getResource() == null) {
+            System.out.println("Wrong resource");
+            System.exit(4);
+        }
+        if (trueRole.getName() == null) {
+            System.out.println("Wrong role");
+            System.exit(3);
+        } else {
+            com.Check.checkAccounting(cmdData);} // Если роль и ресурс верны  то идем в аккаунтинг
+
     }
 
     public static Accounting checkAccounting(HashMap<String, String> arrArgValues) throws ParseException {
