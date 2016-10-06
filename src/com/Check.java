@@ -7,13 +7,14 @@ import java.util.*;
 import static com.Hash.hash;
 
 public class Check {
-    public static User checkAuthentication(ArrayList<User> users, HashMap<String, String> arrArgValues) throws Throwable {
+    public static void checkAuthentication(ArrayList<User> users, ArrayList<Role> currentRoles, CmdUser cmdData) throws Throwable {
         String login = "", pass = "";
         User curUser = null;
-        if (arrArgValues.containsKey("login") && arrArgValues.containsKey("password")) {
-            login = arrArgValues.get("login");
-            pass = arrArgValues.get("password");
+        if (cmdData.getLogin()!=null && cmdData.getPassword()!=null) {
+            login = cmdData.getLogin();
+            pass = cmdData.getPassword();
         }
+        else Cli.help();
 
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getLogin().equals(login)) {
@@ -32,7 +33,9 @@ public class Check {
             System.out.printf("Wrong password");
             System.exit(2);
         }
-        return curUser;
+
+        // Если все верно то идем в авторизацию
+        com.Check.checkAuthorization(currentRoles,cmdData);
     }
 
     public static Role checkAuthorization(ArrayList<Role> currentRoles, HashMap<String, String> arrArgValues) {
