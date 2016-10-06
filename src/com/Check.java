@@ -77,10 +77,20 @@ public class Check {
 
     }
 
-    public static Accounting checkAccounting(HashMap<String, String> arrArgValues) throws ParseException {
-        //выделяем даты и объем
-        String ds = arrArgValues.get("date-start");
-        String de = arrArgValues.get("date-end");
+    public static void checkAccounting(CmdUser cmdData) throws ParseException {
+
+        String ds = "";
+        String de = "";
+        int vol=0;
+
+        if (cmdData.getDate_start()!=null && cmdData.getDate_end()!=null && cmdData.getVolume()!=null) {
+            //выделяем даты и объем
+            ds = cmdData.getDate_start();
+            de = cmdData.getDate_end();
+            vol = Integer.parseInt(cmdData.getVolume());
+        }
+        else Cli.help(); //???
+
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date_start = format.parse(ds);
         Date date_end = format.parse(de);
@@ -96,6 +106,7 @@ public class Check {
         String[] dsParts = ds.split("-"); //Если введен день больше чем есть в месяце, то необходимо
         String[] deParts = de.split("-"); //сравнивать с считанной датой тк оно перекидывает на другой месяц
 
+        //проверка
         System.out.println(date_start.getDate() + " " + m_s + " " + y_s);
 
         int temp_ds = Integer.parseInt(dsParts[2]);
@@ -111,16 +122,12 @@ public class Check {
             System.exit(5);
         }
 
-        int vol = Integer.parseInt(arrArgValues.get("volume"));
-        
         //Проверка объема
         if (vol < 0) {
             System.out.printf("Wrong volume");
             System.exit(5);
         }
-
-        Accounting accCheck = new Accounting(vol, null, date_start, date_end);
-
-        return accCheck;
+        System.exit(0);
+        // return  curUser;
     }
 }
