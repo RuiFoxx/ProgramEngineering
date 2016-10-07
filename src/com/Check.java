@@ -45,15 +45,9 @@ public class Check {
 
     public static void checkAuthorization(ArrayList<Role> currentRoles, CmdUser cmdData) throws ParseException {
         //выделяем реусрс и роль
-        String role = "";
-        String resource = "";
+        String role = cmdData.getRole();
+        String resource = cmdData.getResource();
         Role trueRole = new Role(999, currentRoles.get(0).getUser(), null, null);
-
-        if (cmdData.getRole()!=null && cmdData.getResource()!=null) {
-            role = cmdData.getRole();
-            resource = cmdData.getResource();
-        }
-        else Cli.help();// ???
 
         //Проверка
         System.out.println(role + " " + resource);
@@ -77,7 +71,12 @@ public class Check {
         if (trueRole.getName() == null) {
             System.out.println("Wrong role");
             System.exit(3);
-        } else {Check.checkAccounting(cmdData);} // Если роль и ресурс верны  то идем в аккаунтинг
+        }
+
+        if (Cli.isAccounting()) {
+            Check.checkAccounting(cmdData);
+        }
+        else System.exit(0);
 
     }
 
