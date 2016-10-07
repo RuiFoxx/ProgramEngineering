@@ -7,14 +7,10 @@ import java.util.*;
 import static com.Hash.hash;
 
 public class Check {
-    public static void checkAuthentication(ArrayList<User> users, ArrayList<Role> currentRoles, CmdUser cmdData) throws Throwable {
-        String login = "", pass = "";
+    public static void checkAuthentication(ArrayList<User> users, ArrayList<Role> roles, CmdUser cmdData) throws Throwable {
+        String login = cmdData.getLogin();
+        String pass = cmdData.getPassword();
         User curUser = null;
-        if (cmdData.getLogin()!=null && cmdData.getPassword()!=null) {
-            login = cmdData.getLogin();
-            pass = cmdData.getPassword();
-        }
-        else Cli.help();
 
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getLogin().equals(login)) {
@@ -34,8 +30,17 @@ public class Check {
             System.exit(2);
         }
 
-        // Если все верно то идем в авторизацию
-        com.Check.checkAuthorization(currentRoles,cmdData);
+        if (Cli.isAuthorization()) {
+            ArrayList<Role> currentRoles = new ArrayList<>(); //все роли для пользователя
+
+            for (int i = 0; i < roles.size(); i++)
+                if (roles.get(i).getUser() == curUser) {
+                    currentRoles.add(roles.get(i));
+                }
+
+            Check.checkAuthorization(currentRoles,cmdData);
+        }
+        else System.exit(0);
     }
 
     public static void checkAuthorization(ArrayList<Role> currentRoles, CmdUser cmdData) throws ParseException {
@@ -72,8 +77,7 @@ public class Check {
         if (trueRole.getName() == null) {
             System.out.println("Wrong role");
             System.exit(3);
-        } else {
-            com.Check.checkAccounting(cmdData);} // Если роль и ресурс верны  то идем в аккаунтинг
+        } else {Check.checkAccounting(cmdData);} // Если роль и ресурс верны  то идем в аккаунтинг
 
     }
 
@@ -84,12 +88,12 @@ public class Check {
         int vol=0;
 
         if (cmdData.getDate_start()!=null && cmdData.getDate_end()!=null && cmdData.getVolume()!=null) {
-            //выделяем даты и объем
+           //выделяем даты и объем
             ds = cmdData.getDate_start();
             de = cmdData.getDate_end();
             vol = Integer.parseInt(cmdData.getVolume());
-        }
-        else Cli.help(); //???
+       }
+       else Cli.help(); //???
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date_start = format.parse(ds);
@@ -128,6 +132,6 @@ public class Check {
             System.exit(5);
         }
         System.exit(0);
-        // return  curUser;
+       // return  curUser;
     }
 }
