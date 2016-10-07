@@ -40,7 +40,10 @@ public class Check {
 
             Check.checkAuthorization(currentRoles,cmdData);
         }
-        else System.exit(0);
+        else {
+            System.out.println("Authentication complete");
+            System.exit(0);
+        }
     }
 
     public static void checkAuthorization(ArrayList<Role> currentRoles, CmdUser cmdData) throws ParseException {
@@ -76,23 +79,18 @@ public class Check {
         if (Cli.isAccounting()) {
             Check.checkAccounting(cmdData);
         }
-        else System.exit(0);
+        else {
+            System.out.println("Authorization complete");
+            System.exit(0);
+        }
 
     }
 
     public static void checkAccounting(CmdUser cmdData) throws ParseException {
 
-        String ds = "";
-        String de = "";
-        int vol=0;
-
-        if (cmdData.getDate_start()!=null && cmdData.getDate_end()!=null && cmdData.getVolume()!=null) {
-           //выделяем даты и объем
-            ds = cmdData.getDate_start();
-            de = cmdData.getDate_end();
-            vol = Integer.parseInt(cmdData.getVolume());
-       }
-       else Cli.help(); //???
+        String ds = cmdData.getDate_start();
+        String de = cmdData.getDate_end();
+        int vol=Integer.parseInt(cmdData.getVolume());
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date_start = format.parse(ds);
@@ -130,7 +128,9 @@ public class Check {
             System.out.printf("Wrong volume");
             System.exit(5);
         }
+
+        System.out.println("Accounting complete");
         System.exit(0);
-       // return  curUser;
+
     }
 }

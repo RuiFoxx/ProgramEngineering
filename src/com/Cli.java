@@ -58,12 +58,16 @@ public class Cli {
             authentication = true;
         }
 
-        if (authentication && cmdData.getResource()!=null && cmdData.getRole()!=null && cmdData.getVolume()==null
-                && cmdData.getDate_start()==null && cmdData.getDate_end()==null){
+        if (cmdData.getLogin()!=null && cmdData.getPassword()!=null && cmdData.getResource()!=null && cmdData.getRole()!=null
+                && cmdData.getVolume()==null && cmdData.getDate_start()==null && cmdData.getDate_end()==null){
+            authentication = true;
             authorization = true;
         }
 
-        if (authorization && cmdData.getVolume()!=null && cmdData.getDate_start()!=null && cmdData.getDate_end()!=null){
+        if (cmdData.getLogin()!=null && cmdData.getPassword()!=null && cmdData.getResource()!=null && cmdData.getRole()!=null
+                && cmdData.getVolume()!=null && cmdData.getDate_start()!=null && cmdData.getDate_end()!=null){
+            authentication = true;
+            authorization = true;
             accounting = true;
         }
 
