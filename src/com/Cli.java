@@ -71,7 +71,7 @@ public class Cli {
             accounting = true;
         }
 
-        if (authentication) {
+        if (isAuthentication()) {
             Check.checkAuthentication(users, roles, cmdData);
         }
         else Cli.help();
