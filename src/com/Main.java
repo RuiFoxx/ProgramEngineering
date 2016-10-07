@@ -15,6 +15,6 @@ public class Main {
         roles.add(new Role(3, users.get(1), "EXECUTE", "a.b.c"));
         roles.add(new Role(4, users.get(0), "EXECUTE", "a.bc"));
 
-        Cli.parse(users, roles, args);
+        new Cli().parse(users, roles, args);
     }
 }

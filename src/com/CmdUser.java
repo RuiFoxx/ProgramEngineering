@@ -19,6 +19,15 @@ public class CmdUser {
         this.date_end = date_end;
     }
 
+    public CmdUser() {
+        this.login = null;
+        this.password = null;
+        this.resource = null;
+        this.role = null;
+        this.date_start = null;
+        this.date_end = null;
+    }
+
     public String getLogin() {
         return login;
     }

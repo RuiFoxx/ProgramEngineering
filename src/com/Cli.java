@@ -12,9 +12,7 @@ public class Cli {
     private static boolean authorization = false;
     private static boolean accounting = false;
 
-    static void parse(ArrayList <User> users, ArrayList <Role> roles, String... args) throws Throwable {
-        CmdUser cmdData = new CmdUser(null,null,null,null,null,null);
-
+    public Cli() {
         options.addOption(new Option("l", "login", true, "your login"))
                 .addOption(new Option("p", "password", true, "your password"))
                 .addOption(new Option("res", "resource", true, "requested resource"))
@@ -23,6 +21,10 @@ public class Cli {
                 .addOption(new Option("de", "date-end", true, "end date (YYYY-MM-DD)"))
                 .addOption(new Option("v", "volume", true, "volume"))
                 .addOption(new Option("h", "help", false, "help")); //добавляем опции для последующего парсинга
+    }
+
+    static void parse(ArrayList <User> users, ArrayList <Role> roles, String... args) throws Throwable {
+        CmdUser cmdData = new CmdUser();
 
         CommandLineParser cmdLineParser = new DefaultParser();
         //CommandLineParser - тип данных, DefaultParser - тип парсера
