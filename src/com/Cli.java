@@ -2,12 +2,18 @@ package com;
 
 import org.apache.commons.cli.*;
 
+import java.util.ArrayList;
+
 
 public class Cli {
     private static Options options = new Options();
 
-    static CmdUser parse(String... args) throws ParseException {
-        CmdUser сmdData = new CmdUser(null,null,null,null,null,null);
+    private static boolean authentication = false;
+    private static boolean authorization = false;
+    private static boolean accounting = false;
+
+    static void parse(ArrayList <User> users, ArrayList <Role> roles, String... args) throws Throwable {
+        CmdUser cmdData = new CmdUser(null,null,null,null,null,null);
 
         options.addOption(new Option("l", "login", true, "your login"))
                 .addOption(new Option("p", "password", true, "your password"))
@@ -25,34 +31,65 @@ public class Cli {
 
        //Заполняем класс
         if (cmdLine.hasOption("l")) {//хэзопшн- проверяет наличие опции
-            сmdData.setLogin(cmdLine.getOptionValue("l")); //помещаем в класс значение опции, соответствующей ключу -l
+            cmdData.setLogin(cmdLine.getOptionValue("l")); //помещаем в класс значение опции, соответствующей ключу -l
         }
         if (cmdLine.hasOption("p")) {
-            сmdData.setPassword(cmdLine.getOptionValue("p"));
+            cmdData.setPassword(cmdLine.getOptionValue("p"));
         }
         if (cmdLine.hasOption("res")) {
-            сmdData.setResource(cmdLine.getOptionValue("res"));
+            cmdData.setResource(cmdLine.getOptionValue("res"));
         }
         if (cmdLine.hasOption("rol")) {
-            сmdData.setRole(cmdLine.getOptionValue("rol"));
+            cmdData.setRole(cmdLine.getOptionValue("rol"));
         }
         if (cmdLine.hasOption("ds")) {
-            сmdData.setDate_start(cmdLine.getOptionValue("ds"));
+            cmdData.setDate_start(cmdLine.getOptionValue("ds"));
         }
         if (cmdLine.hasOption("de")) {
-            сmdData.setDate_end(cmdLine.getOptionValue("de"));
+            cmdData.setDate_end(cmdLine.getOptionValue("de"));
         }
         if (cmdLine.hasOption("v")) {
-            сmdData.setVolume(cmdLine.getOptionValue("v"));
+            cmdData.setVolume(cmdLine.getOptionValue("v"));
         }
 
-        return сmdData;
+        if (cmdData.getLogin()!=null && cmdData.getPassword()!=null
+                && cmdData.getResource()==null && cmdData.getRole()==null && cmdData.getVolume()==null
+                && cmdData.getDate_start()==null && cmdData.getDate_end()==null){
+            authentication = true;
+        }
+
+        if (authentication && cmdData.getResource()!=null && cmdData.getRole()!=null && cmdData.getVolume()==null
+                && cmdData.getDate_start()==null && cmdData.getDate_end()==null){
+            authorization = true;
+        }
+
+        if (authorization && cmdData.getVolume()!=null && cmdData.getDate_start()!=null && cmdData.getDate_end()!=null){
+            accounting = true;
+        }
+
+        if (authentication) {
+            Check.checkAuthentication(users, roles, cmdData);
+        }
+        else Cli.help();
+
     }
 
     public static void help() {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("AAA protocol", options);
         System.exit(0);
+    }
+
+    public static boolean isAuthentication() {
+        return authentication;
+    }
+
+    public static boolean isAuthorization() {
+        return authorization;
+    }
+
+    public static boolean isAccounting() {
+        return accounting;
     }
 }
 

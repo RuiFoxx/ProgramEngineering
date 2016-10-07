@@ -16,23 +16,7 @@ public class Main {
         roles.add(new Role(3, users.get(1), "EXECUTE", "a.b.c"));
         roles.add(new Role(4, users.get(0), "EXECUTE", "a.bc"));
 
-        CmdUser cmdData = Cli.parse(args);
-
-        User currentUser; //Текущий пользователь ???
-        Role role; //Его роль
-        Accounting account; //Его параметры
-        //все роли для пользователя
-
-
-        ArrayList<Role> currentRoles = new ArrayList<>();
-
-        for (int i = 0; i < roles.size(); i++)
-            if (roles.get(i).getUser() == currentUser) {
-                currentRoles.add(roles.get(i));
-            }
-
-            //~~~~~~~~~~~~~~~Аутентификация~~~~~~~~~~~~~~~
-
+        Cli.parse(users, roles,args);
 
     }
 }
