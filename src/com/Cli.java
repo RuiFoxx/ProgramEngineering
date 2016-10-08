@@ -23,7 +23,7 @@ public class Cli {
                 .addOption(new Option("h", "help", false, "help")); //добавляем опции для последующего парсинга
     }
 
-    static void parse(ArrayList <User> users, ArrayList <Role> roles, String... args) throws Throwable {
+    void parse(ArrayList <User> users, ArrayList <Role> roles, String... args) throws Throwable {
         CmdUser cmdData = new CmdUser();
 
         CommandLineParser cmdLineParser = new DefaultParser();
