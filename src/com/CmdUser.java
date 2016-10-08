@@ -2,7 +2,6 @@ package com;
 
 //В этот класс записываем данные из коммандной строки
 public class CmdUser {
-
     private String login;
     private String password;
     private String resource;
