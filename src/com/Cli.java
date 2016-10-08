@@ -13,7 +13,7 @@ public class Cli {
     private static boolean accounting = false;
 
     static void parse(ArrayList <User> users, ArrayList <Role> roles, String... args) throws Throwable {
-        CmdUser cmdData = new CmdUser(null,null,null,null,null,null);
+        CmdUser cmdData = new CmdUser();
 
         options.addOption(new Option("l", "login", true, "your login"))
                 .addOption(new Option("p", "password", true, "your password"))
@@ -52,24 +52,20 @@ public class Cli {
             cmdData.setVolume(cmdLine.getOptionValue("v"));
         }
 
-        if (cmdData.getLogin()!=null && cmdData.getPassword()!=null
-                && cmdData.getResource()==null && cmdData.getRole()==null && cmdData.getVolume()==null
-                && cmdData.getDate_start()==null && cmdData.getDate_end()==null){
-            authentication = true;
-        }
-
-        if (cmdData.getLogin()!=null && cmdData.getPassword()!=null && cmdData.getResource()!=null && cmdData.getRole()!=null
-                && cmdData.getVolume()==null && cmdData.getDate_start()==null && cmdData.getDate_end()==null){
-            authentication = true;
-            authorization = true;
-        }
-
-        if (cmdData.getLogin()!=null && cmdData.getPassword()!=null && cmdData.getResource()!=null && cmdData.getRole()!=null
-                && cmdData.getVolume()!=null && cmdData.getDate_start()!=null && cmdData.getDate_end()!=null){
+        if (cmdData.isAccounting()){
             authentication = true;
             authorization = true;
             accounting = true;
         }
+        else
+             if (cmdData.isAuthorization()){
+                 authentication = true;
+                 authorization = true;
+             }
+             else
+                if (cmdData.isAuthentication()){
+                    authentication = true;
+                }
 
         if (authentication) {
             Check.checkAuthentication(users, roles, cmdData);
@@ -84,15 +80,15 @@ public class Cli {
         System.exit(0);
     }
 
-    public static boolean isAuthentication() {
+    public static boolean getAuthentication() {
         return authentication;
     }
 
-    public static boolean isAuthorization() {
+    public static boolean getAuthorization() {
         return authorization;
     }
 
-    public static boolean isAccounting() {
+    public static boolean getAccounting() {
         return accounting;
     }
 }

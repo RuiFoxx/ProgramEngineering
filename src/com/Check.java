@@ -30,7 +30,7 @@ public class Check {
             System.exit(2);
         }
 
-        if (Cli.isAuthorization()) {
+        if (Cli.getAuthorization()) {
             ArrayList<Role> currentRoles = new ArrayList<>(); //все роли для пользователя
 
             for (int i = 0; i < roles.size(); i++)
@@ -76,7 +76,7 @@ public class Check {
             System.exit(3);
         }
 
-        if (Cli.isAccounting()) {
+        if (Cli.getAccounting()) {
             Check.checkAccounting(cmdData);
         }
         else {
