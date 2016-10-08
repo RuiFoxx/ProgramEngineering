@@ -4,7 +4,8 @@ import java.util.Date;
 public class Accounting {
     private int volume;
     private Role role;
-    private Date date_start, date_end;
+    private Date date_start;
+    private Date date_end;
 
     public void setRole(Role role) { this.role = role; }
 

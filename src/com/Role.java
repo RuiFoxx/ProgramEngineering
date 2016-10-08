@@ -3,7 +3,8 @@ package com;
 public class Role {
     private int id;
     private User user;
-    private String name, resource;
+    private String name;
+    private String resource;
 
     public String getName() {
         return name;

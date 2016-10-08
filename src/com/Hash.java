@@ -7,8 +7,8 @@ import java.security.SecureRandom;
 
 public class Hash {
     public static String hash(String pass) throws NoSuchAlgorithmException {
-        MessageDigest messageDigest = null;
-        byte[] digest = new byte[0];
+        MessageDigest messageDigest;
+        byte[] digest;
 
         messageDigest = MessageDigest.getInstance("MD5");
         messageDigest.reset();
