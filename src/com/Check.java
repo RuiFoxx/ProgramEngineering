@@ -57,7 +57,8 @@ public class Check {
 
         for (int i = 0; i < currentRoles.size(); i++) {
             //проверка ресурсов
-            if ((resource.indexOf(currentRoles.get(i).getResource()) == 0) && ((resource.length() == currentRoles.get(i).getResource().length())
+            if ((resource.indexOf(currentRoles.get(i).getResource()) == 0)
+                    && ((resource.length() == currentRoles.get(i).getResource().length())
                     || (resource.charAt(currentRoles.get(i).getResource().length()) == '.')
                     && (resource.length() != currentRoles.get(i).getResource().length()))) {
                 trueRole.setResource(resource);
