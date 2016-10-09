@@ -9,6 +9,14 @@ public class User {
     private String password;
     private String salt;
 
+    public User(User u) {
+        this.id = u.id;
+        this.name = u.name;
+        this.login = u.login;
+        this.salt = u.salt;
+        this.password = u.password;
+    }
+
     public String getSalt() {
         return salt;
     }

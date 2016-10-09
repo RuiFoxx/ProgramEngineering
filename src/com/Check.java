@@ -12,9 +12,9 @@ public class Check {
         String pass = cmdData.getPassword();
         User curUser = null;
 
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getLogin().equals(login)) {
-                curUser = users.get(i);
+        for (User u : users) {
+            if (u.getLogin().equals(login)) {
+                curUser = new User(u);
                 break;
             }
         }
@@ -33,9 +33,9 @@ public class Check {
         if (Cli.getAuthorization()) {
             ArrayList<Role> currentRoles = new ArrayList<>(); //все роли для пользователя
 
-            for (int i = 0; i < roles.size(); i++)
-                if (roles.get(i).getUser() == curUser) {
-                    currentRoles.add(roles.get(i));
+            for (Role r : roles)
+                if (r.getUser() == curUser) {
+                    currentRoles.add(r);
                 }
 
             Check.checkAuthorization(currentRoles,cmdData);
@@ -55,14 +55,14 @@ public class Check {
         //Проверка
         System.out.println(role + " " + resource);
 
-        for (int i = 0; i < currentRoles.size(); i++) {
+        for (Role r : currentRoles) {
             //проверка ресурсов
-            if ((resource.indexOf(currentRoles.get(i).getResource()) == 0)
-                    && ((resource.length() == currentRoles.get(i).getResource().length())
-                    || (resource.charAt(currentRoles.get(i).getResource().length()) == '.')
-                    && (resource.length() != currentRoles.get(i).getResource().length()))) {
+            if ((resource.indexOf(r.getResource()) == 0)
+                    && ((resource.length() == r.getResource().length())
+                    || (resource.charAt(r.getResource().length()) == '.')
+                    && (resource.length() != r.getResource().length()))) {
                 trueRole.setResource(resource);
-                if (currentRoles.get(i).getName().equals(role)) {
+                if (r.getName().equals(role)) {
                     trueRole.setName(role);
                     break;
                 }
