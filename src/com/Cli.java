@@ -73,7 +73,7 @@ public class Cli {
             accounting = true;
         }
 
-        if (isAuthentication()) {
+        if (getAuthentication()) {
             Check.checkAuthentication(users, roles, cmdData);
         }
         else Cli.help();
@@ -86,15 +86,15 @@ public class Cli {
         System.exit(0);
     }
 
-    public static boolean isAuthentication() {
+    public static boolean getAuthentication() {
         return authentication;
     }
 
-    public static boolean isAuthorization() {
+    public static boolean getAuthorization() {
         return authorization;
     }
 
-    public static boolean isAccounting() {
+    public static boolean getAccounting() {
         return accounting;
     }
 }
