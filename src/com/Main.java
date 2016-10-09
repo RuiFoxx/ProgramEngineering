@@ -1,6 +1,7 @@
 package com;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main {
     public static void main(String ...args) throws Throwable  {
@@ -15,6 +16,7 @@ public class Main {
         roles.add(new Role(3, users.get(1), "EXECUTE", "a.b.c"));
         roles.add(new Role(4, users.get(0), "EXECUTE", "a.bc"));
 
-        new Cli().parse(users, roles, args);
+        Cli.parse(users, roles,args);
+
     }
 }

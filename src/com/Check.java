@@ -30,7 +30,7 @@ public class Check {
             System.exit(2);
         }
 
-        if (Cli.isAuthorization()) {
+        if (Cli.getAuthorization()) {
             ArrayList<Role> currentRoles = new ArrayList<>(); //все роли для пользователя
 
             for (int i = 0; i < roles.size(); i++)
@@ -77,7 +77,7 @@ public class Check {
             System.exit(3);
         }
 
-        if (Cli.isAccounting()) {
+        if (Cli.getAccounting()) {
             Check.checkAccounting(cmdData);
         }
         else {
@@ -87,7 +87,7 @@ public class Check {
 
     }
 
-    public static void checkAccounting(CmdUser cmdData) throws ParseException {
+    public static void checkAccounting(CmdUser cmdData) {
 
         String ds = cmdData.getDate_start();
         String de = cmdData.getDate_end();
@@ -100,33 +100,18 @@ public class Check {
         }
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date date_start = format.parse(ds);
-        Date date_end = format.parse(de);
+        format.setLenient(false);
+        try {
+            Date date = format.parse(ds);
+            Calendar date_start = Calendar.getInstance();
+            date_start.setTime(date);
 
-        int d_s = date_start.getDate(); //считанная дата старт из строки
-        int m_s = date_start.getMonth() + 1;
-        int y_s = date_start.getYear() + 1900;
-
-        int d_e = date_end.getDate(); //считанная дата энд из строки
-        int m_e = date_end.getMonth() + 1;
-        int y_e = date_end.getYear() + 1900;
-
-        String[] dsParts = ds.split("-"); //Если введен день больше чем есть в месяце, то необходимо
-        String[] deParts = de.split("-"); //сравнивать с считанной датой тк оно перекидывает на другой месяц
-
-        //проверка
-        System.out.println(date_start.getDate() + " " + m_s + " " + y_s);
-
-        int temp_ds = Integer.parseInt(dsParts[2]);
-        int temp_ms = Integer.parseInt(dsParts[1]);
-        int temp_ys = Integer.parseInt(dsParts[0]);
-
-        int temp_de = Integer.parseInt(deParts[2]);
-        int temp_me = Integer.parseInt(deParts[1]);
-        int temp_ye = Integer.parseInt(deParts[0]);
-        if ((temp_ds != d_s) || (temp_ms != m_s) || (temp_ys != y_s)  //если перешел в другой день/месяц/год, то ведденая дата значит неверна
-                || (temp_de != d_e) || (temp_me != m_e) || (temp_ye != y_e)) {
-            System.out.printf("Wrong date");
+            date = format.parse(de);
+            Calendar date_end = Calendar.getInstance();
+            date_end.setTime(date);
+        }
+        catch (ParseException e) {
+            System.out.println("Invalid date or wrong format");
             System.exit(5);
         }
 

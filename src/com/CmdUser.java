@@ -2,6 +2,7 @@ package com;
 
 //В этот класс записываем данные из коммандной строки
 public class CmdUser {
+
     private String login;
     private String password;
     private String resource;
@@ -10,13 +11,14 @@ public class CmdUser {
     private String date_end;
     private String volume;
 
-    public CmdUser(String login, String password, String resource, String role, String date_start, String date_end) {
+    public CmdUser(String login, String password, String resource, String role, String date_start, String date_end, String volume) {
         this.login = login;
         this.password = password;
         this.resource = resource;
         this.role = role;
         this.date_start = date_start;
         this.date_end = date_end;
+        this.volume = volume;
     }
 
     public CmdUser() {
@@ -26,6 +28,7 @@ public class CmdUser {
         this.role = null;
         this.date_start = null;
         this.date_end = null;
+        this.volume = null;
     }
 
     public String getLogin() {
@@ -44,9 +47,7 @@ public class CmdUser {
         this.password = password;
     }
 
-    public String getResource() {
-        return resource;
-    }
+    public String getResource() { return resource; }
 
     public void setResource(String resource) {
         this.resource = resource;
@@ -82,5 +83,30 @@ public class CmdUser {
 
     public void setVolume(String volume) {
         this.volume = volume;
+    }
+
+    public boolean isAuthentication(){
+        if (this.getLogin()!=null && this.getPassword()!=null
+                && this.getResource()==null && this.getRole()==null && this.getVolume()==null
+                && this.getDate_start()==null && this.getDate_end()==null){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isAuthorization (){
+        if (this.getLogin()!=null && this.getPassword()!=null && this.getResource()!=null && this.getRole()!=null
+                && this.getVolume()==null && this.getDate_start()==null && this.getDate_end()==null){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isAccounting (){
+        if (this.getLogin()!=null && this.getPassword()!=null && this.getResource()!=null && this.getRole()!=null
+                && this.getVolume()!=null && this.getDate_start()!=null && this.getDate_end()!=null){
+            return true;
+        }
+        return false;
     }
 }
