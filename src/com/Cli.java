@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 
 public class Cli {
-    private static Options options = new Options();
+    private Options options = new Options();
 
     private static boolean authentication = false;
     private static boolean authorization = false;
@@ -82,7 +82,7 @@ public class Cli {
 
     public static void help() {
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("AAA protocol", options);
+        formatter.printHelp("AAA protocol", new Cli().options);
         System.exit(0);
     }
 
