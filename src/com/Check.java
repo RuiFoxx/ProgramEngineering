@@ -90,7 +90,13 @@ public class Check {
 
         String ds = cmdData.getDate_start();
         String de = cmdData.getDate_end();
-        int vol=Integer.parseInt(cmdData.getVolume());
+        int vol = 0;
+        try {
+            vol=Integer.parseInt(cmdData.getVolume());
+        } catch (NumberFormatException e) {
+            System.out.println("Failed to parse volume.");
+            System.exit(5);
+        }
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date_start = format.parse(ds);
