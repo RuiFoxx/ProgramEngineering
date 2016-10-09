@@ -7,7 +7,7 @@ public class Main {
 
         ArrayList <User> users = new ArrayList<>();
         users.add(new User(1, "John Doe", "jdoe", "sup3rpaZZ"));
-        users.add(new User(2, "Jane Row", "jrow", "Qweqrty12"));
+        users.add(new User(2, "Jane Row", "jrow", "Qwerty12"));
 
         ArrayList <Role> roles = new ArrayList<>();
         roles.add(new Role(1, users.get(0), "READ", "a"));
