@@ -54,24 +54,20 @@ public class Cli {
             cmdData.setVolume(cmdLine.getOptionValue("v"));
         }
 
-        if (cmdData.getLogin()!=null && cmdData.getPassword()!=null
-                && cmdData.getResource()==null && cmdData.getRole()==null && cmdData.getVolume()==null
-                && cmdData.getDate_start()==null && cmdData.getDate_end()==null){
+        if (cmdData.isAuthentication()){
             authentication = true;
         }
-
-        if (cmdData.getLogin()!=null && cmdData.getPassword()!=null && cmdData.getResource()!=null && cmdData.getRole()!=null
-                && cmdData.getVolume()==null && cmdData.getDate_start()==null && cmdData.getDate_end()==null){
-            authentication = true;
-            authorization = true;
-        }
-
-        if (cmdData.getLogin()!=null && cmdData.getPassword()!=null && cmdData.getResource()!=null && cmdData.getRole()!=null
-                && cmdData.getVolume()!=null && cmdData.getDate_start()!=null && cmdData.getDate_end()!=null){
-            authentication = true;
-            authorization = true;
-            accounting = true;
-        }
+        else
+            if (cmdData.isAuthorization()) {
+                 authentication = true;
+                 authorization = true;
+            }
+            else
+            if (cmdData.isAccounting()){
+                authentication = true;
+                authorization = true;
+                accounting = true;
+            }
 
         if (getAuthentication()) {
             Check.checkAuthentication(users, roles, cmdData);

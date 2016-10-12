@@ -1,6 +1,7 @@
 package com;
 
 import java.text.*;
+import java.time.temporal.ChronoField;
 import java.util.*;
 
 import static com.Hash.hash;
@@ -47,19 +48,21 @@ public class Check {
 
     public static void checkAuthorization(ArrayList<Role> currentRoles, CmdUser cmdData) throws ParseException {
         //выделяем реусрс и роль
-        String role = cmdData.getRole();
+        String role = cmdData.getRole().toUpperCase();
         String resource = cmdData.getResource();
         Role trueRole = new Role(999, currentRoles.get(0).getUser(), null, null);
 
         //Проверка
         System.out.println(role + " " + resource);
 
+        if (!role.equals("READ") && !role.equals("WRITE") && !role.equals("EXECUTE")) {
+            System.out.println("Invalid role");
+            System.exit(3);
+        }
+
         for (Role r : currentRoles) {
             //проверка ресурсов
-            if ((resource.indexOf(r.getResource()) == 0)
-                    && ((resource.length() == r.getResource().length())
-                    || (resource.charAt(r.getResource().length()) == '.')
-                    && (resource.length() != r.getResource().length()))) {
+            if (new Check().checkResource(resource,r.getResource())) {
                 trueRole.setResource(resource);
                 if (r.getName().equals(role)) {
                     trueRole.setName(role);
@@ -67,13 +70,9 @@ public class Check {
                 }
             }
         }
-        if (trueRole.getResource() == null) {
+        if ((trueRole.getResource() == null)||(trueRole.getName() == null)) {
             System.out.println("Wrong resource");
             System.exit(4);
-        }
-        if (trueRole.getName() == null) {
-            System.out.println("Wrong role");
-            System.exit(3);
         }
 
         if (Cli.getAccounting()) {
@@ -123,5 +122,15 @@ public class Check {
         System.out.println("Accounting complete");
         System.exit(0);
 
+    }
+
+    public boolean checkResource (String res1, String res2) {
+        if ((res1.indexOf(res2) == 0)
+                && ((res1.length() == res2.length())
+                || (res1.charAt(res2.length()) == '.')
+                && (res1.length() != res2.length()))) {
+            return true;
+        }
+        else return false;
     }
 }

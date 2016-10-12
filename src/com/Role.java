@@ -32,4 +32,5 @@ public class Role {
     public void setResource(String resource) {
         this.resource = resource;
     }
+
 }
