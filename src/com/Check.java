@@ -1,7 +1,6 @@
 package com;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.*;
 import java.util.*;
 
 import static com.Hash.hash;
@@ -34,7 +33,7 @@ public class Check {
             ArrayList<Role> currentRoles = new ArrayList<>(); //все роли для пользователя
 
             for (Role r : roles)
-                if (r.getUser() == curUser) {
+                if (r.getUser().getLogin().equals(curUser.getLogin())) {
                     currentRoles.add(r);
                 }
 

@@ -1,9 +1,7 @@
 package com;
 
 import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import java.security.*;
 
 public class Hash {
     public static String hash(String pass) throws NoSuchAlgorithmException {
