@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String ...args) throws Throwable  {
-
         ArrayList <User> users = new ArrayList<>();
         users.add(new User(1, "John Doe", "jdoe", "sup3rpaZZ"));
         users.add(new User(2, "Jane Row", "jrow", "Qwerty12"));
