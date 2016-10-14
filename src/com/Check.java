@@ -20,13 +20,13 @@ public class Check {
         }
 
         if (curUser == null) {
-            System.out.printf("User not found");
+            System.out.println("User not found");
             System.exit(1);
         }
 
         pass = hash(hash(pass) + curUser.getSalt());
         if (!curUser.getPassword().equals(pass)) {
-            System.out.printf("Wrong password");
+            System.out.println("Wrong password");
             System.exit(2);
         }
 
@@ -115,7 +115,7 @@ public class Check {
 
         //Проверка объема
         if (vol < 0) {
-            System.out.printf("Wrong volume");
+            System.out.println("Wrong volume");
             System.exit(5);
         }
 
