@@ -2,8 +2,8 @@
 
 **Build project:**
 
->From Windows:
+From Windows:
 `> .\build.bat`
-```
->From Linux/OS X:
+
+From Linux/OS X:
 `$ ./build.sh` (will be added later)
