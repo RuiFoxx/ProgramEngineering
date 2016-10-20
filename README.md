@@ -3,30 +3,21 @@
 
 **Build project:**
 -----------------------------------
-
-From Windows:
-`> .\build.bat`
-
-From Linux/OS X:
-`$ ./build.sh`
+```
+$ ./build.sh
+```
 
 **Run project:**
 -----------------------------------
-
-From Windows:
-`> .\run.bat [options]`
-
-From Linux/OS X:
-`$ ./run.sh [options]`
+```
+$ ./run.sh [options]
+```
 
 **Test project:**
 -----------------------------------
-
-From Windows:
-`> .\tests.bat`
-
-From Linux/OS X:
-`$ ./tests.sh`
+```
+$ ./tests.sh
+```
 
 **Help:**
 -----------------------------------
