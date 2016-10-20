@@ -124,7 +124,7 @@ public class Check {
 
     }
 
-    public boolean checkResource (String res1, String res2) {
+    private boolean checkResource (String res1, String res2) {
         if ((res1.indexOf(res2) == 0)
                 && ((res1.length() == res2.length())
                 || (res1.charAt(res2.length()) == '.')
