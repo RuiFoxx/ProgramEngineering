@@ -8,7 +8,7 @@ From Windows:
 `> .\build.bat`
 
 From Linux/OS X:
-`$ ./build.sh` (will be added later)
+`$ ./build.sh`
 
 **Run project:**
 -----------------------------------
@@ -17,13 +17,13 @@ From Windows:
 `> .\run.bat [options]`
 
 From Linux/OS X:
-`$ ./run.sh [options]` (will be added later)
+`$ ./run.sh [options]`
 
 **Test project:**
 -----------------------------------
 
 From Windows:
-`> .\tests.bat` (will be added later)
+`> .\tests.bat`
 
 From Linux/OS X:
 `$ ./tests.sh`
