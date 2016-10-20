@@ -13,6 +13,7 @@ OUT_CLS="$OUT/classes/"
 # Папка в которую копируются библиотеки
 OUT_LIB="$OUT/lib/"
 
+echo $(uname -s)
 # Подстановка : или ; в зависимости от операционной системы
 LIB="lib/*"
 OUT_JAR="out/aaa.jar"
@@ -30,4 +31,4 @@ elif [ "$(expr substr $(uname -s) 1 7)" == "MSYS_NT" ]; then
     # Do something under MSYS platform
     CP="$LIB;$OUT_JAR"
 fi
-#echo $CP
+echo $CP
