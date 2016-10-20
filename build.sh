@@ -14,4 +14,4 @@ cp $LIB $OUT_LIB
 
 echo "Архивация всех классов в $OUT_JAR в jar файл, где $MAIN – класс с main()"
 jar -cfe $OUT_JAR $MAIN -C $OUT_CLS .
-javac -sourcepath "./src" -classpath "./lib/commons-cli-1.3.1.jar;" src/com/Main.java -d out/
+#javac -sourcepath "./src" -classpath "./lib/commons-cli-1.3.1.jar;" src/com/Main.java -d out/
