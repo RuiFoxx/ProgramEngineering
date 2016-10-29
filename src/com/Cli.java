@@ -79,6 +79,7 @@ public class Cli {
     public static void help() {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("AAA protocol", new Cli().options);
+        Check.logger.info("Showed help");
         System.exit(0);
     }
 

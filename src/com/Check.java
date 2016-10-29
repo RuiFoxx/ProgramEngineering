@@ -7,6 +7,10 @@ import org.apache.log4j.*;
 import static com.Hash.hash;
 
 public class Check {
+
+    static final Logger logger = Logger.getLogger(Check.class);
+
+
     public static void checkAuthentication(ArrayList<User> users, ArrayList<Role> roles, CmdUser cmdData) throws Throwable {
         String login = cmdData.getLogin();
         String pass = cmdData.getPassword();
@@ -21,12 +25,14 @@ public class Check {
 
         if (curUser == null) {
             System.out.println("User not found");
+            logger.error("User "+login+" not found. Exit code: 1");
             System.exit(1);
         }
 
         pass = hash(hash(pass) + curUser.getSalt());
         if (!curUser.getPassword().equals(pass)) {
             System.out.println("Wrong password");
+            logger.error("Password is wrong for user "+login+". Exit code: 2");
             System.exit(2);
         }
 
@@ -38,10 +44,12 @@ public class Check {
                     currentRoles.add(r);
                 }
 
+            logger.info("Authentication complete for user "+ login);
             Check.checkAuthorization(currentRoles,cmdData);
         }
         else {
             System.out.println("Authentication complete");
+            logger.info("Authentication complete for user "+ login+". Exit code: 0");
             System.exit(0);
         }
     }
@@ -57,6 +65,7 @@ public class Check {
 
         if (!role.equals("READ") && !role.equals("WRITE") && !role.equals("EXECUTE")) {
             System.out.println("Invalid role");
+            logger.error("Invalid role '"+role+"'. Exit code: 3");
             System.exit(3);
         }
 
@@ -71,15 +80,18 @@ public class Check {
             }
         }
         if ((trueRole.getResource() == null)||(trueRole.getName() == null)) {
-            System.out.println("Wrong resource");
+            System.out.println("No access");
+            logger.error("No access to '"+resource+"' for user "+cmdData.getLogin()+". Exit code: 4");
             System.exit(4);
         }
 
         if (Cli.getAccounting()) {
+            logger.info("Authorization complete for user "+cmdData.getLogin());
             Check.checkAccounting(cmdData);
         }
         else {
             System.out.println("Authorization complete");
+            logger.info("Authorization complete for user "+cmdData.getLogin()+". Exit code: 0");
             System.exit(0);
         }
 
@@ -94,6 +106,7 @@ public class Check {
             vol=Integer.parseInt(cmdData.getVolume());
         } catch (NumberFormatException e) {
             System.out.println("Failed to parse volume.");
+            logger.error("Failed to parse volume '"+cmdData.getVolume()+"'. Exit code: 5. StackTrace: ", e);
             System.exit(5);
         }
 
@@ -110,16 +123,19 @@ public class Check {
         }
         catch (ParseException e) {
             System.out.println("Invalid date or wrong format");
+            logger.error("Invalid date or wrong format. Exit code: 5. StackTrace: ",e);
             System.exit(5);
         }
 
         //Проверка объема
         if (vol < 0) {
             System.out.println("Wrong volume");
+            logger.error("Wrong volume '"+vol+"'. Exit code: 5");
             System.exit(5);
         }
 
         System.out.println("Accounting complete");
+        logger.info("Accounting complete for user "+cmdData.getLogin()+". Exit code: 0");
         System.exit(0);
 
     }
