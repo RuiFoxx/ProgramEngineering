@@ -124,7 +124,7 @@ public class Check {
             logger.error("Wrong volume '"+vol+"'. Exit code: 5");
             System.exit(5);
         }
-        
+
         logger.info("Accounting complete for user "+cmdData.getLogin()+". Exit code: 0");
         System.exit(0);
 
