@@ -37,13 +37,16 @@ public class Check {
         if (Cli.getAuthorization()) {
             ArrayList<Role> currentRoles = new ArrayList<>(); //все роли для пользователя
 
-            for (Role r : roles)
-                if (r.getUser().getLogin().equals(curUser.getLogin())) {
-                    currentRoles.add(r);
+            for (Role r : roles) {
+                for (int i = 0; i < users.size(); i++) {
+                    if ((r.getUserId() == users.get(i).getId() - 1) && (users.get(i).getLogin().equals(curUser.getLogin()))) {
+                        currentRoles.add(r);
+                    }
                 }
+            }
 
             logger.info("Authentication complete for user "+ login);
-            Check.checkAuthorization(currentRoles,cmdData);
+            Check.checkAuthorization(currentRoles, cmdData);
         }
         else {
             logger.info("Authentication complete for user "+ login+". Exit code: 0");
@@ -55,7 +58,7 @@ public class Check {
         //выделяем реусрс и роль
         String role = cmdData.getRole().toUpperCase();
         String resource = cmdData.getResource();
-        Role trueRole = new Role(999, currentRoles.get(0).getUser(), null, null);
+        Role trueRole = new Role(999, currentRoles.get(0).getUserId(), null, null);
 
         //Проверка
         System.out.println(role + " " + resource);

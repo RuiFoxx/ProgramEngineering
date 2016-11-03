@@ -2,7 +2,7 @@ package com;
 
 public class Role {
     private int id;
-    private User user;
+    private int user_id;
     private String name;
     private String resource;
 
@@ -17,17 +17,17 @@ public class Role {
         return name;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return user_id;
     }
 
     public String getResource() {
         return resource;
     }
 
-    public Role(int id, User user, String name, String resource) {
+    public Role(int id, int user_id, String name, String resource) {
         this.id = id;
-        this.user = user;
+        this.user_id = user_id;
         this.name = name;
         this.resource = resource;
     }

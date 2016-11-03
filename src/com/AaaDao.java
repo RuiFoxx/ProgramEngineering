@@ -16,42 +16,28 @@ public class AaaDao {
         this.conn = conn;
     }
 
-    public User getUser(String login) throws SQLException {
-        PreparedStatement pstm = conn.prepareStatement("SELECT * FROM USER WHERE LOGIN = ?");
-        pstm.setString(1, login);
+    public ArrayList<User> getUsers() throws SQLException {
+        PreparedStatement pstm = conn.prepareStatement("SELECT * FROM USER");
         ResultSet rs = pstm.executeQuery();
-        if (rs.next()) {
+        ArrayList<User> users = new ArrayList<>();
+        while (rs.next()) {
             User user = new User();
             user.setId(rs.getInt(1));
             user.setName(rs.getString(2));
             user.setLogin(rs.getString(3));
             user.setPassword(rs.getString(4));
             user.setSalt(rs.getString(5));
-            return user;
-        } else {
-            return null;
+            users.add(user);
         }
+        return users;
     }
 
-    public /*Role*/ArrayList<Role> getRoles(/*int id*/) throws SQLException{
-        /*PreparedStatement pstm = conn.prepareStatement("SELECT * FROM ROLE WHERE ID = ?");
-        pstm.setInt(1, id);
-        ResultSet rs = pstm.executeQuery();
-        if (rs.next()) {
-            Role role = new Role();
-            role.setName(rs.getString(2));
-            role.setResource(rs.getString(3));
-            return role;
-        } else {
-            return null;
-        }
-    }*/
-
-    PreparedStatement pstm = conn.prepareStatement("SELECT * FROM ROLE");
+    public ArrayList<Role> getRoles() throws SQLException {
+        PreparedStatement pstm = conn.prepareStatement("SELECT * FROM ROLE");
         ResultSet rs = pstm.executeQuery();
         ArrayList<Role> roles = new ArrayList<>();
 
-        if (rs.next()) {
+        while(rs.next()) {
             Role role = new Role();
             role.setId(rs.getInt(1));
             role.setName(rs.getString(2));
