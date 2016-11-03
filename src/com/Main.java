@@ -15,11 +15,11 @@ public class Main {
         Class.forName("org.h2.Driver");
         Connection conn = DriverManager.getConnection("jdbc:h2:./db/aaa", "aaa", "aaa");
         // add application code here
-        conn.close();
+        //conn.close();
 
         ArrayList <User> users = new ArrayList<>();
-        users.add(new User(1, "John Doe", "jdoe", "sup3rpaZZ"));
-        users.add(new User(2, "Jane Row", "jrow", "Qwerty12"));
+        users.add(new User(new AaaDao(conn).getUser("jdoe")));
+        users.add(new User(new AaaDao(conn).getUser("jrow")));
 
         ArrayList <Role> roles = new ArrayList<>();
         roles.add(new Role(1, users.get(0), "READ", "a"));
@@ -27,8 +27,7 @@ public class Main {
         roles.add(new Role(3, users.get(1), "EXECUTE", "a.b.c"));
         roles.add(new Role(4, users.get(0), "EXECUTE", "a.bc"));
 
-        System.out.println(users.get(1).getPassword());
-        System.out.println(users.get(1).getSalt());
         new Cli().parse(users, roles, args);
+        conn.close();
     }
 }

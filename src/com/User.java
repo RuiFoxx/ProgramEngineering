@@ -17,8 +17,31 @@ public class User {
         this.password = u.password;
     }
 
+    public User() {
+    }
+
     public String getSalt() {
         return salt;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public String getPassword() {
