@@ -9,11 +9,11 @@ public class Main {
         Check.logger.info("Program started");
 
         Flyway flyway = new Flyway();
-        flyway.setDataSource("jdbc:h2:./aaa", "aaa", "aaa");
+        flyway.setDataSource("jdbc:h2:./db/aaa", "aaa", "aaa");
         flyway.migrate();
 
         Class.forName("org.h2.Driver");
-        Connection conn = DriverManager.getConnection("jdbc:h2:./aaa", "aaa", "aaa");
+        Connection conn = DriverManager.getConnection("jdbc:h2:./db/aaa", "aaa", "aaa");
         // add application code here
         conn.close();
 
@@ -27,6 +27,8 @@ public class Main {
         roles.add(new Role(3, users.get(1), "EXECUTE", "a.b.c"));
         roles.add(new Role(4, users.get(0), "EXECUTE", "a.bc"));
 
+        System.out.println(users.get(1).getPassword());
+        System.out.println(users.get(1).getSalt());
         new Cli().parse(users, roles, args);
     }
 }
