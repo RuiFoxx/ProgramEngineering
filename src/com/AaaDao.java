@@ -6,9 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- * Created by ruifo on 03.11.2016.
- */
 public class AaaDao {
     Connection conn;
 
