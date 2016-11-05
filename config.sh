@@ -20,15 +20,15 @@ OUT_JAR="out/aaa.jar"
 #echo $(uname -s)
 if [ "$(uname)" == "Darwin" ]; then
     # Do something under Mac OS X platform
-    CP="$LIB:$OUT_JAR"
+    CP="$LIB:$OUT_JAR:$SRC"
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
     # Do something under GNU/Linux platform
-    CP="$LIB:$OUT_JAR"
+    CP="$LIB:$OUT_JAR:$SRC"
 elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
     # Do something under Windows NT platform
-    CP="$LIB;$OUT_JAR"
+    CP="$LIB;$OUT_JAR;$SRC"
 elif [ "$(expr substr $(uname -s) 1 7)" == "MSYS_NT" ]; then
     # Do something under MSYS platform
-    CP="$LIB;$OUT_JAR"
+    CP="$LIB;$OUT_JAR;$SRC"
 fi
 echo $CP
