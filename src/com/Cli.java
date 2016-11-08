@@ -23,7 +23,7 @@ public class Cli {
                 .addOption(new Option("h", "help", false, "help")); //добавляем опции для последующего парсинга
     }
 
-    void parse(ArrayList <User> users, ArrayList <Role> roles, String... args) throws Throwable {
+    void parse(AaaDao aaa, String... args) throws Throwable {
         CmdUser cmdData = new CmdUser();
 
         CommandLineParser cmdLineParser = new DefaultParser();
@@ -70,7 +70,7 @@ public class Cli {
             }
 
         if (getAuthentication()) {
-            Check.checkAuthentication(users, roles, cmdData);
+            Check.checkAuthentication(aaa, cmdData);
         }
         else Cli.help();
 

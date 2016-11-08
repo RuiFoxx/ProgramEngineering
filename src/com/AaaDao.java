@@ -1,9 +1,6 @@
 package com;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class AaaDao {
@@ -13,24 +10,26 @@ public class AaaDao {
         this.conn = conn;
     }
 
-    public ArrayList<User> getUsers() throws SQLException {
-        PreparedStatement pstm = conn.prepareStatement("SELECT * FROM USER");
+    public User getUsers(String login) throws SQLException {
+        PreparedStatement pstm = conn.prepareStatement("SELECT * FROM USER WHERE LOGIN = ?");
+        pstm.setString(1, login);
         ResultSet rs = pstm.executeQuery();
-        ArrayList<User> users = new ArrayList<>();
-        while (rs.next()) {
+        if(!rs.next()) {
+            return null;
+        } else {
             User user = new User();
             user.setId(rs.getInt(1));
             user.setName(rs.getString(2));
             user.setLogin(rs.getString(3));
             user.setPassword(rs.getString(4));
             user.setSalt(rs.getString(5));
-            users.add(user);
+            return user;
         }
-        return users;
     }
 
-    public ArrayList<Role> getRoles() throws SQLException {
-        PreparedStatement pstm = conn.prepareStatement("SELECT * FROM ROLE");
+    public ArrayList<Role> getRoles(User u) throws SQLException {
+        PreparedStatement pstm = conn.prepareStatement("SELECT * FROM ROLE WHERE USER_ID = ?");
+        pstm.setInt(1, u.getId());
         ResultSet rs = pstm.executeQuery();
         ArrayList<Role> roles = new ArrayList<>();
 
@@ -43,5 +42,14 @@ public class AaaDao {
         }
 
         return roles;
+    }
+
+    public void setAcc(Accounting a) throws SQLException {
+        PreparedStatement pstm = conn.prepareStatement("INSERT INTO ACCOUNTING(volume, role_id, date_start, date_end) VALUES(?, ?, ?, ?)");
+        pstm.setInt(1, a.getVolume());
+        pstm.setInt(2, a.getRoleId());
+        pstm.setDate(3, new Date(a.getDateStart().getTime()));
+        pstm.setDate(4, new Date(a.getDateEnd().getTime()));
+        pstm.execute();
     }
 }

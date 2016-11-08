@@ -1,5 +1,6 @@
 package com;
 
+import java.sql.SQLException;
 import java.text.*;
 import java.util.*;
 import org.apache.log4j.*;
@@ -11,16 +12,13 @@ public class Check {
     static final Logger logger = Logger.getLogger(Check.class);
 
 
-    public static void checkAuthentication(ArrayList<User> users, ArrayList<Role> roles, CmdUser cmdData) throws Throwable {
+    public static void checkAuthentication(AaaDao aaa, CmdUser cmdData) throws Throwable {
         String login = cmdData.getLogin();
         String pass = cmdData.getPassword();
         User curUser = null;
 
-        for (User u : users) {
-            if (u.getLogin().equals(login)) {
-                curUser = new User(u);
-                break;
-            }
+        if (aaa.getUsers(login) != null) {
+            curUser = new User(aaa.getUsers(login));
         }
 
         if (curUser == null) {
@@ -35,18 +33,10 @@ public class Check {
         }
 
         if (Cli.getAuthorization()) {
-            ArrayList<Role> currentRoles = new ArrayList<>(); //все роли для пользователя
-
-            for (Role r : roles) {
-                for (int i = 0; i < users.size(); i++) {
-                    if ((r.getUserId() == users.get(i).getId() - 1) && (users.get(i).getLogin().equals(curUser.getLogin()))) {
-                        currentRoles.add(r);
-                    }
-                }
-            }
+            ArrayList<Role> currentRoles = aaa.getRoles(curUser); //все роли для пользователя
 
             logger.info("Authentication complete for user "+ login);
-            Check.checkAuthorization(currentRoles, cmdData);
+            Check.checkAuthorization(currentRoles, cmdData, aaa);
         }
         else {
             logger.info("Authentication complete for user "+ login+". Exit code: 0");
@@ -54,7 +44,7 @@ public class Check {
         }
     }
 
-    public static void checkAuthorization(ArrayList<Role> currentRoles, CmdUser cmdData) throws ParseException {
+    public static void checkAuthorization(ArrayList<Role> currentRoles, CmdUser cmdData, AaaDao aaa) throws ParseException {
         //выделяем реусрс и роль
         String role = cmdData.getRole().toUpperCase();
         String resource = cmdData.getResource();
@@ -85,7 +75,9 @@ public class Check {
 
         if (Cli.getAccounting()) {
             logger.info("Authorization complete for user "+cmdData.getLogin());
-            Check.checkAccounting(cmdData);
+            Accounting acc = new Accounting();
+            acc.setRole_id(trueRole.getId());
+            Check.checkAccounting(cmdData, acc, aaa);
         }
         else {
             logger.info("Authorization complete for user "+cmdData.getLogin()+". Exit code: 0");
@@ -94,10 +86,10 @@ public class Check {
 
     }
 
-    public static void checkAccounting(CmdUser cmdData) {
+    public static void checkAccounting(CmdUser cmdData, Accounting acc, AaaDao aaa) {
 
-        String ds = cmdData.getDate_start();
-        String de = cmdData.getDate_end();
+        String ds = cmdData.getDateStart();
+        String de = cmdData.getDateEnd();
         int vol = 0;
         try {
             vol=Integer.parseInt(cmdData.getVolume());
@@ -108,17 +100,16 @@ public class Check {
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         format.setLenient(false);
-        try {
-            Date date = format.parse(ds);
-            Calendar date_start = Calendar.getInstance();
-            date_start.setTime(date);
 
-            date = format.parse(de);
-            Calendar date_end = Calendar.getInstance();
-            date_end.setTime(date);
+        Date dateStart = null, dateEnd = null;
+
+        try {
+            dateStart = format.parse(ds);
+
+            dateEnd = format.parse(de);
         }
         catch (ParseException e) {
-            logger.error("Invalid date or wrong format. Exit code: 5. StackTrace: ",e);
+            logger.error("Invalid date or wrong format. Exit code: 5. StackTrace: ", e);
             System.exit(5);
         }
 
@@ -128,7 +119,17 @@ public class Check {
             System.exit(5);
         }
 
+        acc.setDate_start(dateStart);
+        acc.setDate_end(dateEnd);
+        acc.setVolume(vol);
+        try {
+            aaa.setAcc(acc);
+        } catch (SQLException e) {
+            logger.error("Failed to add accounting class in database. Stacktrace: ", e);
+        }
+
         logger.info("Accounting complete for user "+cmdData.getLogin()+". Exit code: 0");
+
         System.exit(0);
 
     }

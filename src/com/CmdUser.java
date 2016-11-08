@@ -61,7 +61,7 @@ public class CmdUser {
         this.role = role;
     }
 
-    public String getDate_start() {
+    public String getDateStart() {
         return date_start;
     }
 
@@ -69,7 +69,7 @@ public class CmdUser {
         this.date_start = date_start;
     }
 
-    public String getDate_end() {
+    public String getDateEnd() {
         return date_end;
     }
 
@@ -88,7 +88,7 @@ public class CmdUser {
     public boolean isAuthentication(){
         if (this.getLogin()!=null && this.getPassword()!=null
                 && this.getResource()==null && this.getRole()==null && this.getVolume()==null
-                && this.getDate_start()==null && this.getDate_end()==null){
+                && this.getDateStart()==null && this.getDateEnd()==null){
             return true;
         }
         return false;
@@ -96,7 +96,7 @@ public class CmdUser {
 
     public boolean isAuthorization (){
         if (this.getLogin()!=null && this.getPassword()!=null && this.getResource()!=null && this.getRole()!=null
-                && this.getVolume()==null && this.getDate_start()==null && this.getDate_end()==null){
+                && this.getVolume()==null && this.getDateStart()==null && this.getDateEnd()==null){
             return true;
         }
         return false;
@@ -104,7 +104,7 @@ public class CmdUser {
 
     public boolean isAccounting (){
         if (this.getLogin()!=null && this.getPassword()!=null && this.getResource()!=null && this.getRole()!=null
-                && this.getVolume()!=null && this.getDate_start()!=null && this.getDate_end()!=null){
+                && this.getVolume()!=null && this.getDateStart()!=null && this.getDateEnd()!=null){
             return true;
         }
         return false;

@@ -15,11 +15,8 @@ public class Main {
         Class.forName("org.h2.Driver");
         Connection conn = DriverManager.getConnection("jdbc:h2:./db/aaa", "aaa", "aaa");
 
-        ArrayList <User> users = new AaaDao(conn).getUsers(); //всё по-честному, а главное - ...
-
-        ArrayList<Role> roles = new AaaDao(conn).getRoles(); //... совсем без костылей!
-
-        new Cli().parse(users, roles, args);
+        AaaDao aaa = new AaaDao(conn);
+        new Cli().parse(aaa, args);
         conn.close();
     }
 }
