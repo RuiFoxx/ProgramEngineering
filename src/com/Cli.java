@@ -2,15 +2,9 @@ package com;
 
 import org.apache.commons.cli.*;
 
-import java.util.ArrayList;
-
 
 public class Cli {
     private Options options = new Options();
-
-    private static boolean authentication = false;
-    private static boolean authorization = false;
-    private static boolean accounting = false;
 
     public Cli() {
         options.addOption(new Option("l", "login", true, "your login"))
@@ -25,6 +19,7 @@ public class Cli {
 
     void parse(AaaDao aaa, String... args) throws Throwable {
         CmdUser cmdData = new CmdUser();
+        int count = 0;
 
         CommandLineParser cmdLineParser = new DefaultParser();
         //CommandLineParser - тип данных, DefaultParser - тип парсера
@@ -34,43 +29,43 @@ public class Cli {
        //Заполняем класс
         if (cmdLine.hasOption("l")) {//хэзопшн- проверяет наличие опции
             cmdData.setLogin(cmdLine.getOptionValue("l")); //помещаем в класс значение опции, соответствующей ключу -l
+            count += 1;
         }
         if (cmdLine.hasOption("p")) {
             cmdData.setPassword(cmdLine.getOptionValue("p"));
+            count += 2;
         }
         if (cmdLine.hasOption("res")) {
             cmdData.setResource(cmdLine.getOptionValue("res"));
+            count += 4;
         }
         if (cmdLine.hasOption("rol")) {
             cmdData.setRole(cmdLine.getOptionValue("rol"));
+            count += 8;
         }
         if (cmdLine.hasOption("ds")) {
             cmdData.setDate_start(cmdLine.getOptionValue("ds"));
+            count += 16;
         }
         if (cmdLine.hasOption("de")) {
             cmdData.setDate_end(cmdLine.getOptionValue("de"));
+            count += 32;
         }
         if (cmdLine.hasOption("v")) {
             cmdData.setVolume(cmdLine.getOptionValue("v"));
+            count += 64;
         }
 
-        if (cmdData.isAuthentication()){
-            authentication = true;
+        switch (count) {
+            case 3 : cmdData.getCheck().setAuthentication();
+                break;
+            case 15 : cmdData.getCheck().setAuthorization();
+                break;
+            case 127: cmdData.getCheck().setAccounting();
         }
-        else
-            if (cmdData.isAuthorization()) {
-                 authentication = true;
-                 authorization = true;
-            }
-            else
-            if (cmdData.isAccounting()){
-                authentication = true;
-                authorization = true;
-                accounting = true;
-            }
 
-        if (getAuthentication()) {
-            Check.checkAuthentication(aaa, cmdData);
+        if (cmdData.getCheck().isAuthentication()) {
+            Processing.checkAuthentication(aaa, cmdData);
         }
         else Cli.help();
 
@@ -79,20 +74,8 @@ public class Cli {
     public static void help() {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("AAA protocol", new Cli().options);
-        Check.logger.info("Showed help");
+        Processing.logger.info("Showed help");
         System.exit(0);
-    }
-
-    public static boolean getAuthentication() {
-        return authentication;
-    }
-
-    public static boolean getAuthorization() {
-        return authorization;
-    }
-
-    public static boolean getAccounting() {
-        return accounting;
     }
 }
 
