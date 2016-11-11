@@ -1,4 +1,6 @@
-package com;
+package com.domain;
+
+import com.Hash;
 
 import java.security.NoSuchAlgorithmException;
 

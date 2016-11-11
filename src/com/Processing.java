@@ -3,6 +3,10 @@ package com;
 import java.sql.SQLException;
 import java.text.*;
 import java.util.*;
+
+import com.domain.Accounting;
+import com.domain.Role;
+import com.domain.User;
 import org.apache.log4j.*;
 
 import static com.Hash.hash;

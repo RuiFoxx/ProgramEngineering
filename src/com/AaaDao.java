@@ -1,5 +1,9 @@
 package com;
 
+import com.domain.Accounting;
+import com.domain.Role;
+import com.domain.User;
+
 import java.sql.*;
 import java.util.ArrayList;
 

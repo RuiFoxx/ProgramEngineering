@@ -1,4 +1,4 @@
-package com;
+package com.domain;
 
 public class Role {
     private int id;
