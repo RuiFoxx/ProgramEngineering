@@ -1,7 +1,7 @@
 package com.domain;
 
 public class Role {
-    private int id;
+    private Integer id;
     private int user_id;
     private String name;
     private String resource;
@@ -29,7 +29,7 @@ public class Role {
         return resource;
     }
 
-    public Role(int id, int user_id, String name, String resource) {
+    public Role(Integer id, int user_id, String name, String resource) {
         this.id = id;
         this.user_id = user_id;
         this.name = name;

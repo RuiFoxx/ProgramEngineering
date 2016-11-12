@@ -52,7 +52,7 @@ public class Processing {
         //выделяем реусрс и роль
         String role = cmdData.getRole().toUpperCase();
         String resource = cmdData.getResource();
-        Role trueRole = new Role(999, currentRoles.get(0).getUserId(), null, null);
+        Role trueRole = new Role(null, currentRoles.get(0).getUserId(), null, null);
 
         //Проверка
         System.out.println(role + " " + resource);
@@ -68,6 +68,7 @@ public class Processing {
                 trueRole.setResource(resource);
                 if (r.getName().equals(role)) {
                     trueRole.setName(role);
+                    trueRole.setId(r.getId());
                     break;
                 }
             }
