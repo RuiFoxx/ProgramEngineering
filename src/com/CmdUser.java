@@ -10,7 +10,6 @@ public class CmdUser {
     private String date_start;
     private String date_end;
     private String volume;
-    private Check check = new Check();
 
     public CmdUser() {
         this.login = null;
@@ -82,7 +81,15 @@ public class CmdUser {
         
     }
 
-    public Check getCheck() {
-        return check;
+    public boolean isAuthentication () {
+        return login != null && password != null;
+    }
+
+    public boolean isAuthorization () {
+        return isAuthentication() && resource != null && role != null;
+    }
+
+    public boolean isAccounting() {
+        return isAuthorization() && date_start != null && date_end != null && volume != null;
     }
 }

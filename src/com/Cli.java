@@ -19,7 +19,6 @@ public class Cli {
 
     void parse(AaaDao aaa, String... args) throws Throwable {
         CmdUser cmdData = new CmdUser();
-        int count = 0;
 
         CommandLineParser cmdLineParser = new DefaultParser();
         //CommandLineParser - тип данных, DefaultParser - тип парсера
@@ -29,42 +28,27 @@ public class Cli {
        //Заполняем класс
         if (cmdLine.hasOption("l")) {//хэзопшн- проверяет наличие опции
             cmdData.setLogin(cmdLine.getOptionValue("l")); //помещаем в класс значение опции, соответствующей ключу -l
-            count += 1;
         }
         if (cmdLine.hasOption("p")) {
             cmdData.setPassword(cmdLine.getOptionValue("p"));
-            count += 2;
         }
         if (cmdLine.hasOption("res")) {
             cmdData.setResource(cmdLine.getOptionValue("res"));
-            count += 4;
         }
         if (cmdLine.hasOption("rol")) {
             cmdData.setRole(cmdLine.getOptionValue("rol"));
-            count += 8;
         }
         if (cmdLine.hasOption("ds")) {
             cmdData.setDate_start(cmdLine.getOptionValue("ds"));
-            count += 16;
         }
         if (cmdLine.hasOption("de")) {
             cmdData.setDate_end(cmdLine.getOptionValue("de"));
-            count += 32;
         }
         if (cmdLine.hasOption("v")) {
             cmdData.setVolume(cmdLine.getOptionValue("v"));
-            count += 64;
         }
 
-        switch (count) {
-            case 3 : cmdData.getCheck().setAuthentication();
-                break;
-            case 15 : cmdData.getCheck().setAuthorization();
-                break;
-            case 127: cmdData.getCheck().setAccounting();
-        }
-
-        if (cmdData.getCheck().isAuthentication()) {
+        if (cmdData.isAuthentication()) {
             Processing.checkAuthentication(aaa, cmdData);
         }
         else Cli.help();

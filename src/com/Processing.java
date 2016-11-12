@@ -36,7 +36,7 @@ public class Processing {
             System.exit(2);
         }
 
-        if (cmdData.getCheck().isAuthorization()) {
+        if (cmdData.isAuthorization()) {
             ArrayList<Role> currentRoles = aaa.getRoles(curUser); //все роли для пользователя
 
             logger.info("Authentication complete for user "+ login);
@@ -77,7 +77,7 @@ public class Processing {
             System.exit(4);
         }
 
-        if (cmdData.getCheck().isAccounting()) {
+        if (cmdData.isAccounting()) {
             logger.info("Authorization complete for user "+cmdData.getLogin());
             Accounting acc = new Accounting();
             acc.setRole_id(trueRole.getId());
@@ -139,12 +139,9 @@ public class Processing {
     }
 
     private boolean checkResource (String res1, String res2) {
-        if ((res1.indexOf(res2) == 0)
+        return (res1.indexOf(res2) == 0)
                 && ((res1.length() == res2.length())
                 || (res1.charAt(res2.length()) == '.')
-                && (res1.length() != res2.length()))) {
-            return true;
-        }
-        else return false;
+                && (res1.length() != res2.length()));
     }
 }
