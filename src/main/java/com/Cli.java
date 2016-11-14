@@ -52,7 +52,6 @@ public class Cli {
             new Processing().checkAuthentication(aaa, cmdData);
         }
         else new Cli().help();
-
     }
 
     private void help() {
