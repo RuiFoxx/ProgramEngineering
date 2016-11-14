@@ -1,3 +1,1 @@
-source ./config.sh
-
-java -classpath "$CP" $MAIN $*
+java -jar ./target/aaa-1.0.jar $*
