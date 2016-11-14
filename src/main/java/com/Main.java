@@ -15,7 +15,8 @@ public class Main {
         Connection conn = DriverManager.getConnection("jdbc:h2:./db/aaa", "aaa", "aaa");
 
         AaaDao aaa = new AaaDao(conn);
-        new Cli().parse(aaa, args);
+        int cliErrCode = new Cli().parse(aaa, args);
         conn.close();
+        System.exit(cliErrCode);
     }
 }

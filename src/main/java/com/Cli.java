@@ -5,6 +5,11 @@ import org.apache.commons.cli.*;
 
 public class Cli {
     private Options options = new Options();
+    private static CmdUser cmdData = new CmdUser();
+
+    public static CmdUser getCmdData() {
+        return cmdData;
+    }
 
     public Cli() {
         options.addOption(new Option("l", "login", true, "your login"))
@@ -17,8 +22,8 @@ public class Cli {
                 .addOption(new Option("h", "help", false, "help")); //добавляем опции для последующего парсинга
     }
 
-    void parse(AaaDao aaa, String... args) throws Throwable {
-        CmdUser cmdData = new CmdUser();
+    public int parse(AaaDao aaa, String... args) throws Throwable {
+        //CmdUser cmdData = new CmdUser();
 
         CommandLineParser cmdLineParser = new DefaultParser();
         //CommandLineParser - тип данных, DefaultParser - тип парсера
@@ -48,17 +53,18 @@ public class Cli {
             cmdData.setVolume(cmdLine.getOptionValue("v"));
         }
 
-        if (cmdData.isAuthentication()) {
-            new Processing().checkAuthentication(aaa, cmdData);
+        if (!cmdData.isAuthentication()) {
+            return new Cli().help();
         }
-        else new Cli().help();
+        return new Processing().checkAuthentication(aaa, cmdData);
     }
 
-    private void help() {
+    private int help() {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("AAA protocol", new Cli().options);
         Processing.logger.info("Showed help");
-        System.exit(0);
+        //System.exit(0);
+        return 0;
     }
 }
 
