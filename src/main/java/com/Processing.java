@@ -16,7 +16,7 @@ public class Processing {
     static final Logger logger = Logger.getLogger(Processing.class);
 
 
-    public static void checkAuthentication(AaaDao aaa, CmdUser cmdData) throws Throwable {
+    public void checkAuthentication(AaaDao aaa, CmdUser cmdData) throws Throwable {
         String login = cmdData.getLogin();
         String pass = cmdData.getPassword();
         User curUser = null;
@@ -40,7 +40,7 @@ public class Processing {
             ArrayList<Role> currentRoles = aaa.getRoles(curUser); //все роли для пользователя
 
             logger.info("Authentication complete for user "+ login);
-            Processing.checkAuthorization(currentRoles, cmdData, aaa);
+            new Processing().checkAuthorization(currentRoles, cmdData, aaa);
         }
         else {
             logger.info("Authentication complete for user "+ login+". Exit code: 0");
@@ -48,7 +48,7 @@ public class Processing {
         }
     }
 
-    public static void checkAuthorization(ArrayList<Role> currentRoles, CmdUser cmdData, AaaDao aaa) throws ParseException {
+    public void checkAuthorization(ArrayList<Role> currentRoles, CmdUser cmdData, AaaDao aaa) throws ParseException {
         //выделяем реусрс и роль
         String role = cmdData.getRole().toUpperCase();
         String resource = cmdData.getResource();
@@ -82,7 +82,7 @@ public class Processing {
             logger.info("Authorization complete for user "+cmdData.getLogin());
             Accounting acc = new Accounting();
             acc.setRole_id(trueRole.getId());
-            Processing.checkAccounting(cmdData, acc, aaa);
+            new Processing().checkAccounting(cmdData, acc, aaa);
         }
         else {
             logger.info("Authorization complete for user "+cmdData.getLogin()+". Exit code: 0");
@@ -91,7 +91,7 @@ public class Processing {
 
     }
 
-    public static void checkAccounting(CmdUser cmdData, Accounting acc, AaaDao aaa) {
+    public void checkAccounting(CmdUser cmdData, Accounting acc, AaaDao aaa) {
 
         String ds = cmdData.getDateStart();
         String de = cmdData.getDateEnd();

@@ -49,13 +49,13 @@ public class Cli {
         }
 
         if (cmdData.isAuthentication()) {
-            Processing.checkAuthentication(aaa, cmdData);
+            new Processing().checkAuthentication(aaa, cmdData);
         }
-        else Cli.help();
+        else new Cli().help();
 
     }
 
-    public static void help() {
+    private void help() {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("AAA protocol", new Cli().options);
         Processing.logger.info("Showed help");
