@@ -39,7 +39,7 @@ public class Processing {
         }
 
         if (cmdData.isAuthorization()) {
-            ArrayList<Role> currentRoles = aaa.getRoles(curUser); //все роли для пользователя
+            ArrayList<Role> currentRoles = aaa.getRoles(curUser.getId()); //все роли для пользователя
 
             logger.info("Authentication complete for user "+ login);
             return new Processing().checkAuthorization(currentRoles, cmdData, aaa);

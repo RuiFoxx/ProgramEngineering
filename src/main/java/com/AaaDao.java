@@ -31,9 +31,9 @@ public class AaaDao {
         }
     }
 
-    public ArrayList<Role> getRoles(User u) throws SQLException {
+    public ArrayList<Role> getRoles(int user_id) throws SQLException {
         PreparedStatement pstm = conn.prepareStatement("SELECT * FROM ROLE WHERE USER_ID = ?");
-        pstm.setInt(1, u.getId());
+        pstm.setInt(1, user_id);
         ResultSet rs = pstm.executeQuery();
         ArrayList<Role> roles = new ArrayList<>();
 
