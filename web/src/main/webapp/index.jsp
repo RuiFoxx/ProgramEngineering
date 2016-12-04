@@ -5,5 +5,8 @@
   ID: <input type="text" name="id"><br><br>
   <input type="submit" value="Submit">
 </form>
+<a href="/echo/get?id=asdf">
+  Test
+</a>
 </body>
 </html>

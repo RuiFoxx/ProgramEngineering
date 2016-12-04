@@ -10,14 +10,15 @@ import java.util.Arrays;
 public class MyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            resp.getWriter().println("ID = " + Arrays.toString(req.getParameterValues("id")));
+        resp.getWriter().println("ID = " + Arrays.toString(req.getParameterValues("id")));
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(req.getRequestURI().equals("/echo/post")) {
-            doGet(req, resp);
+        if (req.getRequestURI().equals("/echo/post")) {
+            resp.sendRedirect("/echo/get?id=" + req.getParameter("id"));
+        } else {
+            resp.setStatus(404);
         }
-        else resp.setStatus(404);
     }
 }
