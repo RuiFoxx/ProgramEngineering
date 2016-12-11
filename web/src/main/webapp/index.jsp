@@ -5,8 +5,14 @@
   ID: <input type="text" name="id"><br><br>
   <input type="submit" value="Submit">
 </form>
-<a href="/echo/get?id=asdf">
-  Test
+<a href="/ajax/user">
+  Test User<br>
+</a>
+<a href="/ajax/role">
+  Test Role<br>
+</a>
+<a href="/ajax/accounting">
+  Test Accounting<br>
 </a>
 </body>
 </html>
