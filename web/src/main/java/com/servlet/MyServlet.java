@@ -1,11 +1,18 @@
 package com.servlet;
 
+import com.google.inject.MembersInjector;
+import com.google.inject.TypeLiteral;
+import com.google.inject.spi.TypeEncounter;
+import com.google.inject.spi.TypeListener;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 public class MyServlet extends HttpServlet {
     @Override

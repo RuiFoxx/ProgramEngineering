@@ -7,13 +7,15 @@ import java.util.*;
 import com.domain.Accounting;
 import com.domain.Role;
 import com.domain.User;
+import com.servlet.InjectLogger;
 import org.apache.log4j.*;
+
 
 import static com.Hash.hash;
 
 public class Processing {
 
-    static final Logger logger = Logger.getLogger(Processing.class);
+    @InjectLogger Logger logger;
 
 
     public int checkAuthentication(AaaDao aaa, CmdUser cmdData) throws Throwable {
