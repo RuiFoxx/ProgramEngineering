@@ -5,7 +5,7 @@ import java.sql.*;
 
 public class Main {
     public static void main(String ...args) throws Throwable  {
-        Processing.logger.info("Program started");
+        Processing.log.info("Program started");
 
         Flyway flyway = new Flyway();
         flyway.setDataSource("jdbc:h2:./db/aaa", "aaa", "aaa");

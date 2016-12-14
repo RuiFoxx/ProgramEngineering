@@ -1,5 +1,10 @@
 package com.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class Role {
     private Integer id;
     private int user_id;
@@ -9,38 +14,10 @@ public class Role {
     public Role() {
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getUserId() {
-        return user_id;
-    }
-
-    public String getResource() {
-        return resource;
-    }
-
     public Role(Integer id, int user_id, String name, String resource) {
         this.id = id;
         this.user_id = user_id;
         this.name = name;
-        this.resource = resource;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setResource(String resource) {
         this.resource = resource;
     }
 

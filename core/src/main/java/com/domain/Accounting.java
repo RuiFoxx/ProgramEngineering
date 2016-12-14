@@ -1,6 +1,11 @@
 package com.domain;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
+@Setter
+@Getter
 public class Accounting {
     private int id;
     private int volume;
@@ -18,37 +23,5 @@ public class Accounting {
 
     public Accounting() {
 
-    }
-
-    public void setVolume(int volume) {
-        this.volume = volume;
-    }
-
-    public void setRole_id(int role_id) {
-        this.role_id = role_id;
-    }
-
-    public void setDate_start(Date date_start) {
-        this.date_start = date_start;
-    }
-
-    public void setDate_end(Date date_end) {
-        this.date_end = date_end;
-    }
-
-    public int getVolume() {
-        return volume;
-    }
-
-    public int getRoleId() {
-        return role_id;
-    }
-
-    public Date getDateStart() {
-        return date_start;
-    }
-
-    public Date getDateEnd() {
-        return date_end;
     }
 }

@@ -8,14 +8,14 @@ import com.domain.Accounting;
 import com.domain.Role;
 import com.domain.User;
 import com.servlet.InjectLogger;
+import lombok.extern.log4j.Log4j;
 import org.apache.log4j.*;
 
 
 import static com.Hash.hash;
 
+@Log4j
 public class Processing {
-
-    @InjectLogger Logger logger;
 
 
     public int checkAuthentication(AaaDao aaa, CmdUser cmdData) throws Throwable {
@@ -28,14 +28,14 @@ public class Processing {
         }
 
         if (curUser == null) {
-            logger.error("User "+login+" not found. Exit code: 1");
+            log.error("User "+login+" not found. Exit code: 1");
             //System.exit(1);
             return 1;
         }
 
         pass = hash(hash(pass) + curUser.getSalt());
         if (!curUser.getPassword().equals(pass)) {
-            logger.error("Password is wrong for user "+login+". Exit code: 2");
+            log.error("Password is wrong for user "+login+". Exit code: 2");
             //System.exit(2);
             return 2;
         }
@@ -43,11 +43,11 @@ public class Processing {
         if (cmdData.isAuthorization()) {
             ArrayList<Role> currentRoles = aaa.getRoles(curUser.getId()); //все роли для пользователя
 
-            logger.info("Authentication complete for user "+ login);
+            log.info("Authentication complete for user "+ login);
             return new Processing().checkAuthorization(currentRoles, cmdData, aaa);
         }
         else {
-            logger.info("Authentication complete for user "+ login+". Exit code: 0");
+            log.info("Authentication complete for user "+ login+". Exit code: 0");
             //System.exit(0);
             return 0;
         }
@@ -57,13 +57,13 @@ public class Processing {
         //выделяем реусрс и роль
         String role = cmdData.getRole().toUpperCase();
         String resource = cmdData.getResource();
-        Role trueRole = new Role(null, currentRoles.get(0).getUserId(), null, null);
+        Role trueRole = new Role(null, currentRoles.get(0).getUser_id(), null, null);
 
         //Проверка
         System.out.println(role + " " + resource);
 
         if (!role.equals("READ") && !role.equals("WRITE") && !role.equals("EXECUTE")) {
-            logger.error("Invalid role '"+role+"'. Exit code: 3");
+            log.error("Invalid role '"+role+"'. Exit code: 3");
             //System.exit(3);
             return 3;
         }
@@ -80,19 +80,19 @@ public class Processing {
             }
         }
         if ((trueRole.getResource() == null)||(trueRole.getName() == null)) {
-            logger.error("No access to '"+resource+"' for user "+cmdData.getLogin()+". Exit code: 4");
+            log.error("No access to '"+resource+"' for user "+cmdData.getLogin()+". Exit code: 4");
             //System.exit(4);
             return 4;
         }
 
         if (cmdData.isAccounting()) {
-            logger.info("Authorization complete for user "+cmdData.getLogin());
+            log.info("Authorization complete for user "+cmdData.getLogin());
             Accounting acc = new Accounting();
             acc.setRole_id(trueRole.getId());
             return new Processing().checkAccounting(cmdData, acc, aaa);
         }
         else {
-            logger.info("Authorization complete for user "+cmdData.getLogin()+". Exit code: 0");
+            log.info("Authorization complete for user "+cmdData.getLogin()+". Exit code: 0");
             //System.exit(0);
             return 0;
         }
@@ -100,13 +100,13 @@ public class Processing {
 
     public int checkAccounting(CmdUser cmdData, Accounting acc, AaaDao aaa) {
 
-        String ds = cmdData.getDateStart();
-        String de = cmdData.getDateEnd();
+        String ds = cmdData.getDate_start();
+        String de = cmdData.getDate_end();
         int vol = 0;
         try {
             vol=Integer.parseInt(cmdData.getVolume());
         } catch (NumberFormatException e) {
-            logger.error("Failed to parse volume '"+cmdData.getVolume()+"'. Exit code: 5. StackTrace: ", e);
+            log.error("Failed to parse volume '"+cmdData.getVolume()+"'. Exit code: 5. StackTrace: ", e);
             //System.exit(5);
             return 5;
         }
@@ -122,14 +122,14 @@ public class Processing {
             dateEnd = format.parse(de);
         }
         catch (ParseException e) {
-            logger.error("Invalid date or wrong format. Exit code: 5. StackTrace: ", e);
+            log.error("Invalid date or wrong format. Exit code: 5. StackTrace: ", e);
             //System.exit(5);
             return 5;
         }
 
         //Проверка объема
         if (vol < 0) {
-            logger.error("Wrong volume '"+vol+"'. Exit code: 5");
+            log.error("Wrong volume '"+vol+"'. Exit code: 5");
             //System.exit(5);
             return 5;
         }
@@ -140,10 +140,10 @@ public class Processing {
         try {
             aaa.setAcc(acc);
         } catch (SQLException e) {
-            logger.error("Failed to add accounting class in database. Stacktrace: ", e);
+            log.error("Failed to add accounting class in database. Stacktrace: ", e);
         }
 
-        logger.info("Accounting complete for user "+cmdData.getLogin()+". Exit code: 0");
+        log.info("Accounting complete for user "+cmdData.getLogin()+". Exit code: 0");
 
         //System.exit(0);
         return 0;

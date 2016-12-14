@@ -62,7 +62,7 @@ public class Cli {
     private int help() {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("AAA protocol", new Cli().options);
-        Processing.logger.info("Showed help");
+        Processing.log.info("Showed help");
         //System.exit(0);
         return 0;
     }

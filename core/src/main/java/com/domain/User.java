@@ -1,9 +1,13 @@
 package com.domain;
 
 import com.Hash;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.security.NoSuchAlgorithmException;
 
+@Setter
+@Getter
 public class User {
     private int id;
     private String name;
@@ -21,40 +25,6 @@ public class User {
 
     public User() {
     }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getLogin() { return login; }
 
     public User(int id, String name, String login, String password) throws NoSuchAlgorithmException {
         this.id = id;

@@ -51,9 +51,9 @@ public class AaaDao {
     public void setAcc(Accounting a) throws SQLException {
         PreparedStatement pstm = conn.prepareStatement("INSERT INTO ACCOUNTING(volume, role_id, date_start, date_end) VALUES(?, ?, ?, ?)");
         pstm.setInt(1, a.getVolume());
-        pstm.setInt(2, a.getRoleId());
-        pstm.setDate(3, new Date(a.getDateStart().getTime()));
-        pstm.setDate(4, new Date(a.getDateEnd().getTime()));
+        pstm.setInt(2, a.getRole_id());
+        pstm.setDate(3, new Date(a.getDate_start().getTime()));
+        pstm.setDate(4, new Date(a.getDate_end().getTime()));
         pstm.execute();
     }
 }
