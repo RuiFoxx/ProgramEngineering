@@ -2,7 +2,6 @@ package com;
 
 import org.apache.commons.cli.*;
 
-
 public class Cli {
     private Options options = new Options();
     private static CmdUser cmdData = new CmdUser();

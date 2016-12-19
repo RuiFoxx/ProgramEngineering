@@ -125,8 +125,8 @@ public class TestCli {
         assertEquals(Cli.getCmdData().getPassword(), "sup3rpaZZ");
         assertEquals(Cli.getCmdData().getResource(), "a");
         assertEquals(Cli.getCmdData().getRole(), "READ");
-        assertEquals(Cli.getCmdData().getDateStart(), "2016-02-02");
-        assertEquals(Cli.getCmdData().getDateEnd(), "2016-03-03");
+        assertEquals(Cli.getCmdData().getDate_start(), "2016-02-02");
+        assertEquals(Cli.getCmdData().getDate_end(), "2016-03-03");
         assertEquals(Cli.getCmdData().getVolume(), "20");
     }
 }
